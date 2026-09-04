@@ -51,17 +51,17 @@ const FileTreeItem: React.FC<{
         <div
           onClick={() => setIsOpen(!isOpen)}
           style={{ paddingLeft: `${level * 14 + 10}px` }}
-          className="flex items-center gap-1.5 py-1 text-slate-300 hover:text-white hover:bg-[#10151C] cursor-pointer text-xs rounded transition-colors"
+          className="flex items-center gap-1.5 py-1 text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-[#10151C] cursor-pointer text-xs rounded transition-colors"
         >
           {isOpen ? (
-            <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+            <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
           ) : (
-            <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+            <ChevronRight className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
           )}
           {isOpen ? (
-            <FolderOpen className="w-3.5 h-3.5 text-[#4DA3FF]" />
+            <FolderOpen className="w-3.5 h-3.5 text-blue-600 dark:text-[#4DA3FF]" />
           ) : (
-            <Folder className="w-3.5 h-3.5 text-[#4DA3FF]" />
+            <Folder className="w-3.5 h-3.5 text-blue-600 dark:text-[#4DA3FF]" />
           )}
           <span className="font-medium tracking-wide">{node.name}</span>
         </div>
@@ -91,8 +91,8 @@ const FileTreeItem: React.FC<{
       style={{ paddingLeft: `${level * 14 + 18}px` }}
       className={`flex items-center gap-2 py-1 text-xs cursor-pointer rounded transition-colors group ${
         isSelected
-          ? 'bg-[#141B24] text-white font-medium border-l-2 border-[#F89820]'
-          : 'text-slate-400 hover:text-slate-200 hover:bg-[#10151C]'
+          ? 'bg-emerald-50 dark:bg-[#141B24] text-emerald-950 dark:text-white font-medium border-l-2 border-emerald-600 dark:border-[#F89820]'
+          : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-[#10151C]'
       }`}
     >
       {getFileIcon(node.name, node.icon)}
@@ -111,7 +111,7 @@ export const FileExplorer: React.FC = () => {
   return (
     <div className="flex flex-col h-full overflow-hidden text-xs">
       {/* Title */}
-      <div className="px-3 py-2 text-[11px] font-semibold text-slate-400 uppercase tracking-wider flex items-center justify-between border-b border-[#1C2636]">
+      <div className="px-3 py-2 text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center justify-between border-b border-slate-200 dark:border-[#1C2636] bg-slate-100/50 dark:bg-transparent">
         <span>EXPLORER: JAVA-PORTFOLIO</span>
       </div>
 

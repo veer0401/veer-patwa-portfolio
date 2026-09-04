@@ -41,12 +41,12 @@ export const SearchPanel: React.FC = () => {
 
   return (
     <div className="flex flex-col h-full overflow-hidden text-xs">
-      <div className="px-3 py-2 text-[11px] font-semibold text-slate-400 uppercase tracking-wider border-b border-[#1C2636]">
+      <div className="px-3 py-2 text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider border-b border-slate-200 dark:border-[#1C2636] bg-slate-100/50 dark:bg-transparent">
         SEARCH WORKSPACE
       </div>
 
       {/* Input */}
-      <div className="p-3 border-b border-[#1C2636]">
+      <div className="p-3 border-b border-slate-200 dark:border-[#1C2636]">
         <div className="relative flex items-center">
           <Search className="w-3.5 h-3.5 absolute left-2.5 text-slate-400" />
           <input
@@ -54,11 +54,11 @@ export const SearchPanel: React.FC = () => {
             placeholder="Search files, symbols, tech..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full pl-8 pr-3 py-1.5 bg-[#080A0D] border border-[#1C2636] focus:border-emerald-500 rounded text-xs text-slate-200 placeholder-slate-500 outline-none"
+            className="w-full pl-8 pr-3 py-1.5 bg-white dark:bg-[#080A0D] border border-slate-300 dark:border-[#1C2636] focus:border-emerald-500 rounded text-xs text-slate-900 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 outline-none"
             autoFocus
           />
         </div>
-        <div className="mt-1.5 text-[10px] text-slate-400">
+        <div className="mt-1.5 text-[10px] text-slate-500 dark:text-slate-400">
           {filtered.length} matching files
         </div>
       </div>
@@ -69,16 +69,16 @@ export const SearchPanel: React.FC = () => {
           <div
             key={item.path}
             onClick={() => openFile(item.path, item.fileName)}
-            className="p-2 rounded bg-[#0B0F14] hover:bg-[#141B24] border border-[#1C2636]/60 hover:border-emerald-500/50 cursor-pointer transition-all group"
+            className="p-2 rounded bg-white dark:bg-[#0B0F14] hover:bg-slate-100 dark:hover:bg-[#141B24] border border-slate-200 dark:border-[#1C2636]/60 hover:border-emerald-500/50 cursor-pointer transition-all group shadow-2xs"
           >
-            <div className="flex items-center justify-between text-slate-200 font-medium">
-              <span className="flex items-center gap-1.5 text-xs text-emerald-400 group-hover:text-white">
-                <FileCode className="w-3.5 h-3.5 text-amber-400" />
+            <div className="flex items-center justify-between text-slate-900 dark:text-slate-200 font-medium">
+              <span className="flex items-center gap-1.5 text-xs text-emerald-700 dark:text-emerald-400 group-hover:text-emerald-950 dark:group-hover:text-white">
+                <FileCode className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
                 {item.title}
               </span>
-              <ArrowRight className="w-3 h-3 text-slate-400 group-hover:text-white transition-transform group-hover:translate-x-0.5" />
+              <ArrowRight className="w-3 h-3 text-slate-400 group-hover:text-slate-900 dark:group-hover:text-white transition-transform group-hover:translate-x-0.5" />
             </div>
-            <p className="text-[11px] text-slate-400 mt-1 line-clamp-1">{item.subtitle}</p>
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-1">{item.subtitle}</p>
           </div>
         ))}
       </div>

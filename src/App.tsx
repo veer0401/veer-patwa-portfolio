@@ -12,6 +12,7 @@ export function App() {
   const viewMode = useIDEStore((s) => s.viewMode);
   const setViewMode = useIDEStore((s) => s.setViewMode);
   const isBooted = useIDEStore((s) => s.isBooted);
+  const theme = useIDEStore((s) => s.theme);
 
   const [isMobile, setIsMobile] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
@@ -61,7 +62,9 @@ export function App() {
   }, []);
 
   return (
-    <div className={`w-full bg-[#080A0D] ${viewMode === 'devos' ? 'h-screen overflow-hidden' : 'min-h-screen'}`}>
+    <div className={`w-full transition-colors duration-200 ${
+      theme === 'light' ? 'bg-[#F8FAFC] text-slate-900' : 'bg-[#080A0D] text-zinc-100'
+    } ${viewMode === 'devos' ? 'h-screen overflow-hidden' : 'min-h-screen'}`}>
       {/* Global Command Palette */}
       <CommandPalette />
 

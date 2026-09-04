@@ -76,7 +76,7 @@ export const TabBar: React.FC = () => {
     <>
       <div
         onContextMenu={handleBarContextMenu}
-        className="h-9 bg-[#06080B] border-b border-[#1C2636] flex items-center overflow-x-auto select-none no-scrollbar relative"
+        className="h-9 bg-slate-100 dark:bg-[#06080B] border-b border-slate-200 dark:border-[#1C2636] flex items-center overflow-x-auto select-none no-scrollbar relative"
       >
         {openTabs.map((tab: Tab) => {
           const isActive = tab.id === activeTabId;
@@ -85,15 +85,15 @@ export const TabBar: React.FC = () => {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               onContextMenu={(e) => handleContextMenu(e, tab.id)}
-              className={`flex items-center gap-2 px-3 h-full border-r border-[#1C2636] text-xs cursor-pointer transition-colors relative group shrink-0 ${
+              className={`flex items-center gap-2 px-3 h-full border-r text-xs cursor-pointer transition-colors relative group shrink-0 ${
                 isActive
-                  ? 'bg-[#0B0F14] text-slate-100 font-medium'
-                  : 'bg-[#080A0D] text-slate-400 hover:text-slate-200 hover:bg-[#0B0F14]/60'
+                  ? 'bg-white dark:bg-[#0B0F14] text-slate-900 dark:text-slate-100 font-medium border-slate-200 dark:border-[#1C2636] shadow-xs'
+                  : 'bg-slate-100 dark:bg-[#080A0D] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-[#0B0F14]/60 border-slate-200 dark:border-[#1C2636]'
               }`}
             >
               {/* Active Indicator Top Line */}
               {isActive && (
-                <span className="absolute top-0 left-0 right-0 h-[2px] bg-emerald-400" />
+                <span className="absolute top-0 left-0 right-0 h-[2px] bg-emerald-600 dark:bg-emerald-400" />
               )}
 
               {getTabIcon(tab.name)}
@@ -105,7 +105,7 @@ export const TabBar: React.FC = () => {
                   e.stopPropagation();
                   closeTab(tab.id);
                 }}
-                className="opacity-0 group-hover:opacity-100 hover:bg-[#1C2636] p-0.5 rounded text-slate-400 hover:text-white transition-all cursor-pointer ml-1"
+                className="opacity-0 group-hover:opacity-100 hover:bg-slate-200 dark:hover:bg-[#1C2636] p-0.5 rounded text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer ml-1"
                 title="Close Tab"
               >
                 <X className="w-3 h-3" />
@@ -120,17 +120,17 @@ export const TabBar: React.FC = () => {
         <div
           ref={menuRef}
           style={{ top: `${contextMenu.y}px`, left: `${contextMenu.x}px` }}
-          className="fixed z-50 min-w-[160px] bg-[#0B0F14] border border-[#1C2636] rounded-md shadow-2xl py-1 text-xs font-mono text-slate-300 select-none animate-in fade-in zoom-in-95 duration-100"
+          className="fixed z-50 min-w-[160px] bg-white dark:bg-[#0B0F14] border border-slate-200 dark:border-[#1C2636] rounded-md shadow-2xl py-1 text-xs font-mono text-slate-700 dark:text-slate-300 select-none animate-in fade-in zoom-in-95 duration-100"
         >
           <button
             onClick={() => {
               closeTab(contextMenu.tabId);
               setContextMenu(null);
             }}
-            className="w-full text-left px-3 py-1.5 hover:bg-[#141B24] hover:text-emerald-400 flex items-center justify-between cursor-pointer transition-colors"
+            className="w-full text-left px-3 py-1.5 hover:bg-slate-100 dark:hover:bg-[#141B24] hover:text-emerald-600 dark:hover:text-emerald-400 flex items-center justify-between cursor-pointer transition-colors"
           >
             <span>Close</span>
-            <span className="text-[10px] text-slate-500">⌘W</span>
+            <span className="text-[10px] text-slate-400 dark:text-slate-500">⌘W</span>
           </button>
 
           {openTabs.length > 1 && (
@@ -139,23 +139,23 @@ export const TabBar: React.FC = () => {
                 closeOtherTabs(contextMenu.tabId);
                 setContextMenu(null);
               }}
-              className="w-full text-left px-3 py-1.5 hover:bg-[#141B24] hover:text-slate-100 flex items-center justify-between cursor-pointer transition-colors"
+              className="w-full text-left px-3 py-1.5 hover:bg-slate-100 dark:hover:bg-[#141B24] hover:text-slate-900 dark:hover:text-slate-100 flex items-center justify-between cursor-pointer transition-colors"
             >
               <span>Close Others</span>
             </button>
           )}
 
-          <div className="my-1 border-t border-[#1C2636]" />
+          <div className="my-1 border-t border-slate-200 dark:border-[#1C2636]" />
 
           <button
             onClick={() => {
               closeAllTabs();
               setContextMenu(null);
             }}
-            className="w-full text-left px-3 py-1.5 hover:bg-rose-950/40 text-rose-300 hover:text-rose-200 flex items-center justify-between cursor-pointer transition-colors"
+            className="w-full text-left px-3 py-1.5 hover:bg-rose-50 dark:hover:bg-rose-950/40 text-rose-600 dark:text-rose-300 hover:text-rose-700 dark:hover:text-rose-200 flex items-center justify-between cursor-pointer transition-colors"
           >
             <span>Close All</span>
-            <span className="text-[10px] text-rose-400/60">⌘K ⌘W</span>
+            <span className="text-[10px] text-rose-500/60 dark:text-rose-400/60">⌘K ⌘W</span>
           </button>
         </div>
       )}

@@ -205,3 +205,6 @@ export interface ServiceNode {
   connections: string[];
   description?: string;
 }
+
+export type ThemeMode = 'dark' | 'light';
+

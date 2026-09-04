@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useIDEStore } from '../store/ideStore';
-import { Search, ArrowRight, FileText, Coffee, Zap, Network, GitCommit, Bot, Terminal, Mail, ExternalLink, Code } from 'lucide-react';
+import { Search, ArrowRight, FileText, Coffee, Zap, Network, GitCommit, Bot, Terminal, Mail, ExternalLink, Code, Sun, Moon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import linksData from '../data/links.json';
 
@@ -12,7 +12,11 @@ export const CommandPalette: React.FC = () => {
     toggleTerminal,
     toggleAgent,
     setViewMode,
+    theme,
+    toggleTheme,
   } = useIDEStore();
+
+  const isLight = theme === 'light';
 
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -41,6 +45,13 @@ export const CommandPalette: React.FC = () => {
       desc: 'Switch to executive HR-first portfolio presentation',
       icon: <FileText className="w-4 h-4 text-emerald-400" />,
       run: () => setViewMode('hr-portfolio'),
+    },
+    {
+      id: 'theme-toggle',
+      title: theme === 'dark' ? 'Switch to Light Theme' : 'Switch to Dark Theme',
+      desc: theme === 'dark' ? 'Enable clean, high-contrast light engineering workspace' : 'Enable sleek obsidian terminal dark theme',
+      icon: theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-400" />,
+      run: () => toggleTheme(),
     },
     {
       id: 'open-about',
@@ -198,11 +209,17 @@ export const CommandPalette: React.FC = () => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: -10 }}
           onClick={(e) => e.stopPropagation()}
-          className="w-full max-w-xl bg-[#0B0F14] border border-[#28374D] rounded-lg shadow-2xl overflow-hidden text-xs text-slate-300"
+          className={`w-full max-w-xl rounded-lg shadow-2xl overflow-hidden text-xs transition-colors duration-200 border ${
+            isLight
+              ? 'bg-white border-slate-300 text-slate-800'
+              : 'bg-[#0B0F14] border-[#28374D] text-slate-300'
+          }`}
         >
           {/* Search Box */}
-          <div className="flex items-center px-4 py-3 border-b border-[#1C2636] bg-[#080A0D]">
-            <Search className="w-4 h-4 text-emerald-400 mr-2 shrink-0" />
+          <div className={`flex items-center px-4 py-3 border-b ${
+            isLight ? 'border-slate-200 bg-slate-50' : 'border-[#1C2636] bg-[#080A0D]'
+          }`}>
+            <Search className={`w-4 h-4 mr-2 shrink-0 ${isLight ? 'text-emerald-700' : 'text-emerald-400'}`} />
             <input
               type="text"
               value={query}
@@ -211,16 +228,20 @@ export const CommandPalette: React.FC = () => {
                 setSelectedIndex(0);
               }}
               placeholder="Type a command or search portfolio..."
-              className="flex-1 bg-transparent text-slate-100 placeholder-slate-500 outline-none text-xs"
+              className={`flex-1 bg-transparent outline-none text-xs ${
+                isLight
+                  ? 'text-slate-900 placeholder-slate-400'
+                  : 'text-slate-100 placeholder-slate-500'
+              }`}
               autoFocus
             />
-            <span className="text-[10px] text-slate-500 font-mono">ESC to exit</span>
+            <span className={`text-[10px] font-mono ${isLight ? 'text-slate-400' : 'text-slate-500'}`}>ESC to exit</span>
           </div>
 
           {/* Action List */}
           <div className="max-h-80 overflow-y-auto p-2 space-y-1">
             {filtered.length === 0 ? (
-              <div className="p-4 text-center text-slate-500 text-xs">
+              <div className={`p-4 text-center text-xs ${isLight ? 'text-slate-400' : 'text-slate-500'}`}>
                 No matching commands found.
               </div>
             ) : (
@@ -236,18 +257,28 @@ export const CommandPalette: React.FC = () => {
                     onMouseEnter={() => setSelectedIndex(idx)}
                     className={`p-2.5 rounded flex items-center justify-between cursor-pointer transition-colors ${
                       isSelected
-                        ? 'bg-[#141B24] text-white border border-emerald-500/40'
+                        ? isLight
+                          ? 'bg-emerald-50 text-emerald-950 border border-emerald-500/50'
+                          : 'bg-[#141B24] text-white border border-emerald-500/40'
+                        : isLight
+                        ? 'text-slate-700 hover:bg-slate-100'
                         : 'text-slate-300 hover:bg-[#10151C]'
                     }`}
                   >
                     <div className="flex items-center gap-3">
                       {action.icon}
                       <div>
-                        <div className="font-medium text-slate-200">{action.title}</div>
-                        <div className="text-[10px] text-slate-400 mt-0.5">{action.desc}</div>
+                        <div className={`font-medium ${
+                          isSelected
+                            ? isLight ? 'text-slate-950 font-bold' : 'text-slate-100 font-semibold'
+                            : isLight ? 'text-slate-800' : 'text-slate-200'
+                        }`}>
+                          {action.title}
+                        </div>
+                        <div className={`text-[10px] mt-0.5 ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>{action.desc}</div>
                       </div>
                     </div>
-                    {isSelected && <ArrowRight className="w-3.5 h-3.5 text-emerald-400" />}
+                    {isSelected && <ArrowRight className={`w-3.5 h-3.5 ${isLight ? 'text-emerald-700' : 'text-emerald-400'}`} />}
                   </div>
                 );
               })

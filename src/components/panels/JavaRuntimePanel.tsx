@@ -68,36 +68,36 @@ export const JavaRuntimePanel: React.FC = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
-          className="w-full max-w-xl bg-[#0B0F14] border border-[#1C2636] rounded-lg shadow-2xl overflow-hidden text-xs text-slate-300"
+          className="w-full max-w-xl bg-white dark:bg-[#0B0F14] border border-slate-200 dark:border-[#1C2636] rounded-lg shadow-2xl overflow-hidden text-xs text-slate-800 dark:text-slate-300"
         >
           {/* Header */}
-          <div className="flex items-center justify-between p-4 bg-[#080A0D] border-b border-[#1C2636]">
-            <div className="flex items-center gap-2 text-[#F89820]">
+          <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-[#080A0D] border-b border-slate-200 dark:border-[#1C2636]">
+            <div className="flex items-center gap-2 text-amber-600 dark:text-[#F89820]">
               <Coffee className="w-4 h-4" />
               <span className="font-bold tracking-wider">JAVA 21 JVM TELEMETRY</span>
-              <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#F89820]/15 text-[#F89820]">
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-[#F89820]/15 text-amber-700 dark:text-[#F89820]">
                 ONLINE
               </span>
             </div>
 
             <button
               onClick={toggleJvmPanel}
-              className="p-1 rounded text-slate-400 hover:text-white hover:bg-[#141B24] cursor-pointer"
+              className="p-1 rounded text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-[#141B24] cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
           </div>
 
           {/* Module Selector Bar */}
-          <div className="flex border-b border-[#1C2636] bg-[#06080B] text-slate-400">
+          <div className="flex border-b border-slate-200 dark:border-[#1C2636] bg-slate-100 dark:bg-[#06080B] text-slate-600 dark:text-slate-400">
             {(['heap', 'threads', 'gc', 'jit'] as const).map((mod) => (
               <button
                 key={mod}
                 onClick={() => setActiveModule(mod)}
                 className={`flex-1 py-2.5 text-center font-medium tracking-wider transition-colors cursor-pointer border-b-2 ${
                   activeModule === mod
-                    ? 'border-[#F89820] text-slate-100 bg-[#0B0F14]'
-                    : 'border-transparent hover:text-slate-200'
+                    ? 'border-amber-500 dark:border-[#F89820] text-slate-900 dark:text-slate-100 bg-white dark:bg-[#0B0F14]'
+                    : 'border-transparent hover:text-slate-900 dark:hover:text-slate-200'
                 }`}
               >
                 {mod.toUpperCase()}
@@ -108,19 +108,19 @@ export const JavaRuntimePanel: React.FC = () => {
           {/* Body */}
           <div className="p-5 space-y-4">
             <div>
-              <h2 className="text-sm font-bold text-white mb-1">{current.title}</h2>
-              <p className="text-xs text-slate-400 leading-relaxed">{current.desc}</p>
+              <h2 className="text-sm font-bold text-slate-900 dark:text-white mb-1">{current.title}</h2>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">{current.desc}</p>
             </div>
 
             {/* Visual Bar for Memory */}
             {activeModule === 'heap' && (
-              <div className="space-y-1.5 p-3 rounded bg-[#080A0D] border border-[#1C2636]">
+              <div className="space-y-1.5 p-3 rounded bg-slate-50 dark:bg-[#080A0D] border border-slate-200 dark:border-[#1C2636]">
                 <div className="flex justify-between text-[11px]">
                   <span>Heap Utilization</span>
-                  <span className="text-[#F89820] font-bold">324 MB / 512 MB</span>
+                  <span className="text-amber-600 dark:text-[#F89820] font-bold">324 MB / 512 MB</span>
                 </div>
-                <div className="h-2 w-full bg-[#10151C] rounded-full overflow-hidden border border-[#1C2636]">
-                  <div className="h-full bg-gradient-to-r from-[#F89820] to-[#E76F00] w-[63%]" />
+                <div className="h-2 w-full bg-slate-200 dark:bg-[#10151C] rounded-full overflow-hidden border border-slate-300 dark:border-[#1C2636]">
+                  <div className="h-full bg-gradient-to-r from-amber-500 to-amber-600 dark:from-[#F89820] dark:to-[#E76F00] w-[63%]" />
                 </div>
               </div>
             )}
@@ -130,12 +130,12 @@ export const JavaRuntimePanel: React.FC = () => {
               {current.metrics.map((m) => (
                 <div
                   key={m.label}
-                  className="p-3 rounded bg-[#080A0D] border border-[#1C2636]/80 flex flex-col justify-between"
+                  className="p-3 rounded bg-slate-50 dark:bg-[#080A0D] border border-slate-200 dark:border-[#1C2636]/80 flex flex-col justify-between shadow-2xs"
                 >
-                  <span className="text-[10px] text-slate-400 uppercase tracking-wider">
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                     {m.label}
                   </span>
-                  <span className="text-xs font-bold text-slate-100 mt-1 font-mono">
+                  <span className="text-xs font-bold text-slate-900 dark:text-slate-100 mt-1 font-mono">
                     {m.value}
                   </span>
                 </div>
@@ -144,9 +144,9 @@ export const JavaRuntimePanel: React.FC = () => {
           </div>
 
           {/* Footer */}
-          <div className="p-3 bg-[#080A0D] border-t border-[#1C2636] flex items-center justify-between text-[11px] text-slate-400">
+          <div className="p-3 bg-slate-50 dark:bg-[#080A0D] border-t border-slate-200 dark:border-[#1C2636] flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
             <span>Runtime: OpenJDK 64-Bit Server VM</span>
-            <span className="text-[#4ADE80]">GC: Optimal</span>
+            <span className="text-emerald-600 dark:text-[#4ADE80]">GC: Optimal</span>
           </div>
         </motion.div>
       </div>

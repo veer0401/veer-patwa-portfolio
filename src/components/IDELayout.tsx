@@ -16,7 +16,7 @@ export const IDELayout: React.FC = () => {
   const { isMobileDrawerOpen, setMobileDrawerOpen } = useIDEStore();
 
   return (
-    <div className="flex flex-col h-screen w-screen overflow-hidden bg-[#080A0D] text-slate-300 font-mono select-none">
+    <div className="devos-root flex flex-col h-screen w-screen overflow-hidden bg-[#080A0D] text-slate-300 font-mono select-none">
       {/* 1. Top Navigation Bar */}
       <TopBar />
 

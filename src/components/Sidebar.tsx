@@ -13,7 +13,7 @@ export const Sidebar: React.FC = () => {
   if (!isSidebarOpen || !activePanel) return null;
 
   return (
-    <aside className="w-64 bg-[#080A0D] border-r border-[#1C2636] flex flex-col h-full select-none z-10">
+    <aside className="w-64 bg-slate-50 dark:bg-[#080A0D] border-r border-slate-200 dark:border-[#1C2636] flex flex-col h-full select-none z-10">
       {activePanel === 'explorer' && <FileExplorer />}
       {activePanel === 'search' && <SearchPanel />}
       {activePanel === 'git' && <GitPanel />}
@@ -21,7 +21,7 @@ export const Sidebar: React.FC = () => {
       {/* Projects List Quick Panel */}
       {activePanel === 'projects' && (
         <div className="flex flex-col h-full overflow-hidden text-xs">
-          <div className="px-3 py-2 text-[11px] font-semibold text-slate-400 uppercase tracking-wider border-b border-[#1C2636]">
+          <div className="px-3 py-2 text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider border-b border-slate-200 dark:border-[#1C2636] bg-slate-100/50 dark:bg-transparent">
             PROJECTS WORKSPACE
           </div>
           <div className="flex-1 overflow-y-auto p-2 space-y-1.5">
@@ -36,25 +36,25 @@ export const Sidebar: React.FC = () => {
                     proj.fileName.endsWith('.cs') ? 'csharp' : 'java'
                   )
                 }
-                className="p-2.5 rounded bg-[#0B0F14] hover:bg-[#141B24] border border-[#1C2636]/80 hover:border-[#F89820]/60 cursor-pointer transition-all"
+                className="p-2.5 rounded bg-white dark:bg-[#0B0F14] hover:bg-slate-100 dark:hover:bg-[#141B24] border border-slate-200 dark:border-[#1C2636]/80 hover:border-amber-500/50 dark:hover:border-[#F89820]/60 cursor-pointer transition-all shadow-2xs"
               >
-                <div className="flex items-center justify-between text-slate-200 font-medium">
-                  <span className="flex items-center gap-1.5 text-xs text-[#F89820]">
+                <div className="flex items-center justify-between text-slate-900 dark:text-slate-200 font-medium">
+                  <span className="flex items-center gap-1.5 text-xs text-amber-600 dark:text-[#F89820]">
                     <Zap className="w-3.5 h-3.5" />
                     {proj.name}
                   </span>
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-400 font-mono">
+                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-500/15 text-emerald-800 dark:text-emerald-400 font-mono">
                     {proj.status}
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-400 mt-1 line-clamp-2">
+                <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-1 line-clamp-2">
                   {proj.description}
                 </p>
                 <div className="flex flex-wrap gap-1 mt-2">
                   {proj.stack.slice(0, 3).map((st: string) => (
                     <span
                       key={st}
-                      className="text-[9px] px-1.5 py-0.5 rounded bg-[#10151C] text-slate-300 border border-[#1C2636]"
+                      className="text-[9px] px-1.5 py-0.5 rounded bg-slate-100 dark:bg-[#10151C] text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-[#1C2636]"
                     >
                       {st}
                     </span>
@@ -69,7 +69,7 @@ export const Sidebar: React.FC = () => {
       {/* Architecture List Quick Panel */}
       {activePanel === 'architecture' && (
         <div className="flex flex-col h-full overflow-hidden text-xs">
-          <div className="px-3 py-2 text-[11px] font-semibold text-slate-400 uppercase tracking-wider border-b border-[#1C2636]">
+          <div className="px-3 py-2 text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider border-b border-slate-200 dark:border-[#1C2636] bg-slate-100/50 dark:bg-transparent">
             SYSTEM ARCHITECTURES
           </div>
           <div className="p-2 space-y-2">
@@ -82,13 +82,13 @@ export const Sidebar: React.FC = () => {
                   'architecture'
                 )
               }
-              className="p-3 rounded bg-[#0B0F14] hover:bg-[#141B24] border border-[#1C2636]/80 hover:border-[#4DA3FF]/60 cursor-pointer transition-all"
+              className="p-3 rounded bg-white dark:bg-[#0B0F14] hover:bg-slate-100 dark:hover:bg-[#141B24] border border-slate-200 dark:border-[#1C2636]/80 hover:border-blue-500/50 dark:hover:border-[#4DA3FF]/60 cursor-pointer transition-all shadow-2xs"
             >
-              <div className="flex items-center gap-2 text-[#4DA3FF] font-medium text-xs">
+              <div className="flex items-center gap-2 text-blue-600 dark:text-[#4DA3FF] font-medium text-xs">
                 <Network className="w-4 h-4" />
                 microservices.arch
               </div>
-              <p className="text-[11px] text-slate-400 mt-1">
+              <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-1">
                 Legacy RMI Monolith to Spring Boot Microservices Modernization & 5-Layer Backend Architecture.
               </p>
             </div>
@@ -99,7 +99,7 @@ export const Sidebar: React.FC = () => {
       {/* Skills Category List */}
       {activePanel === 'skills' && (
         <div className="flex flex-col h-full overflow-hidden text-xs">
-          <div className="px-3 py-2 text-[11px] font-semibold text-slate-400 uppercase tracking-wider border-b border-[#1C2636]">
+          <div className="px-3 py-2 text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider border-b border-slate-200 dark:border-[#1C2636] bg-slate-100/50 dark:bg-transparent">
             JAVA SKILL MATRIX
           </div>
           <div className="flex-1 overflow-y-auto p-2 space-y-1.5">
@@ -114,14 +114,14 @@ export const Sidebar: React.FC = () => {
                     'java'
                   )
                 }
-                className="p-2.5 rounded bg-[#0B0F14] hover:bg-[#141B24] border border-[#1C2636]/80 cursor-pointer transition-all"
+                className="p-2.5 rounded bg-white dark:bg-[#0B0F14] hover:bg-slate-100 dark:hover:bg-[#141B24] border border-slate-200 dark:border-[#1C2636]/80 cursor-pointer transition-all shadow-2xs"
               >
-                <div className="flex items-center justify-between text-slate-200 font-medium">
-                  <span className="flex items-center gap-1.5 text-xs text-slate-200">
+                <div className="flex items-center justify-between text-slate-900 dark:text-slate-200 font-medium">
+                  <span className="flex items-center gap-1.5 text-xs text-slate-800 dark:text-slate-200">
                     <Coffee className="w-3.5 h-3.5" style={{ color: cat.color }} />
                     {cat.name}
                   </span>
-                  <span className="text-[10px] text-slate-400 font-mono">
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">
                     {cat.items.length} skills
                   </span>
                 </div>
@@ -129,7 +129,7 @@ export const Sidebar: React.FC = () => {
                   {cat.items.slice(0, 4).map((sk: { name: string }) => (
                     <span
                       key={sk.name}
-                      className="text-[9px] px-1 py-0.5 rounded bg-[#10151C] text-slate-400 border border-[#1C2636]"
+                      className="text-[9px] px-1 py-0.5 rounded bg-slate-100 dark:bg-[#10151C] text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-[#1C2636]"
                     >
                       {sk.name}
                     </span>

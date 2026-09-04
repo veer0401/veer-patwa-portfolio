@@ -1,7 +1,11 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
-  :root {
+  :root,
+  html.dark,
+  [data-theme="dark"] {
     --bg-darker: #06080b;
     --bg-main: #080A0D;
     --bg-surface: #0B0F14;
@@ -9,6 +13,9 @@
     --bg-panel: #141B24;
     --border-subtle: #1C2636;
     --border-focus: #28374D;
+    --text-primary: #F4F4F5;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
     
     --java-orange: #F89820;
     --java-warm: #E76F00;
@@ -18,6 +25,39 @@
     --status-success: #4ADE80;
     --status-warning: #FBBF24;
     --status-error: #FF5C5C;
+
+    --scrollbar-track: #080A0D;
+    --scrollbar-thumb: #1C2636;
+    --scrollbar-thumb-hover: #28374D;
+    --grid-dot: rgba(255, 255, 255, 0.04);
+  }
+
+  html.light,
+  [data-theme="light"] {
+    --bg-darker: #F1F5F9;
+    --bg-main: #F8FAFC;
+    --bg-surface: #FFFFFF;
+    --bg-elevated: #F8FAFC;
+    --bg-panel: #FFFFFF;
+    --border-subtle: #E2E8F0;
+    --border-focus: #CBD5E1;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #64748B;
+    
+    --java-orange: #D97706;
+    --java-warm: #C2410C;
+    --spring-green: #15803D;
+    --electric-blue: #2563EB;
+    --cyan-accent: #0284C7;
+    --status-success: #16A34A;
+    --status-warning: #D97706;
+    --status-error: #DC2626;
+
+    --scrollbar-track: #F1F5F9;
+    --scrollbar-thumb: #CBD5E1;
+    --scrollbar-thumb-hover: #94A3B8;
+    --grid-dot: rgba(15, 23, 42, 0.06);
   }
 
   * {
@@ -26,13 +66,14 @@
 
   body {
     background-color: var(--bg-main);
-    color: #94A3B8;
+    color: var(--text-secondary);
     font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     min-height: 100vh;
     margin: 0;
     padding: 0;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 
   /* Custom scrollbar */
@@ -42,16 +83,16 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: #080A0D;
+    background: var(--scrollbar-track);
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #1C2636;
+    background: var(--scrollbar-thumb);
     border-radius: 3px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #28374D;
+    background: var(--scrollbar-thumb-hover);
   }
 }
 
@@ -80,3 +121,152 @@
   backdrop-filter: blur(12px);
   border: 1px solid rgba(28, 38, 54, 0.8);
 }
+
+/* ==========================================================================
+   DEV.OS Light Mode Theme Engine
+   Transforms DEV.OS into a clean, modern VS Code / IntelliJ Light IDE
+   ========================================================================== */
+
+html.light .devos-root,
+[data-theme="light"] .devos-root {
+  background-color: #F8FAFC !important;
+  color: #1E293B !important;
+}
+
+/* Background surfaces */
+html.light .devos-root .bg-\[\#080A0D\],
+[data-theme="light"] .devos-root .bg-\[\#080A0D\] {
+  background-color: #F8FAFC !important;
+}
+
+html.light .devos-root .bg-\[\#06080B\],
+[data-theme="light"] .devos-root .bg-\[\#06080B\] {
+  background-color: #F1F5F9 !important;
+}
+
+html.light .devos-root .bg-\[\#0B0F14\],
+[data-theme="light"] .devos-root .bg-\[\#0B0F14\] {
+  background-color: #FFFFFF !important;
+}
+
+html.light .devos-root .bg-\[\#10151C\],
+[data-theme="light"] .devos-root .bg-\[\#10151C\] {
+  background-color: #F1F5F9 !important;
+}
+
+html.light .devos-root .bg-\[\#141B24\],
+[data-theme="light"] .devos-root .bg-\[\#141B24\] {
+  background-color: #E2E8F0 !important;
+}
+
+html.light .devos-root .bg-\[\#080d14\],
+[data-theme="light"] .devos-root .bg-\[\#080d14\] {
+  background-color: #F8FAFC !important;
+}
+
+/* Borders */
+html.light .devos-root .border-\[\#1C2636\],
+[data-theme="light"] .devos-root .border-\[\#1C2636\],
+html.light .devos-root .border-\[\#1C2636\]\/80,
+[data-theme="light"] .devos-root .border-\[\#1C2636\]\/80,
+html.light .devos-root .border-\[\#1C2636\]\/60,
+[data-theme="light"] .devos-root .border-\[\#1C2636\]\/60,
+html.light .devos-root .border-zinc-800,
+[data-theme="light"] .devos-root .border-zinc-800 {
+  border-color: #E2E8F0 !important;
+}
+
+html.light .devos-root .border-\[\#28374D\],
+[data-theme="light"] .devos-root .border-\[\#28374D\] {
+  border-color: #CBD5E1 !important;
+}
+
+/* Text readability */
+html.light .devos-root .text-slate-100,
+[data-theme="light"] .devos-root .text-slate-100 {
+  color: #0F172A !important;
+}
+
+html.light .devos-root .text-slate-200,
+[data-theme="light"] .devos-root .text-slate-200 {
+  color: #1E293B !important;
+}
+
+html.light .devos-root .text-slate-300,
+[data-theme="light"] .devos-root .text-slate-300 {
+  color: #334155 !important;
+}
+
+html.light .devos-root .text-slate-400,
+[data-theme="light"] .devos-root .text-slate-400 {
+  color: #64748B !important;
+}
+
+html.light .devos-root .text-zinc-300,
+[data-theme="light"] .devos-root .text-zinc-300 {
+  color: #334155 !important;
+}
+
+html.light .devos-root .text-zinc-400,
+[data-theme="light"] .devos-root .text-zinc-400 {
+  color: #64748B !important;
+}
+
+/* High contrast accent colors for Light Mode */
+html.light .devos-root .text-\[\#F89820\],
+[data-theme="light"] .devos-root .text-\[\#F89820\] {
+  color: #D97706 !important;
+}
+
+html.light .devos-root .text-\[\#4DA3FF\],
+[data-theme="light"] .devos-root .text-\[\#4DA3FF\] {
+  color: #2563EB !important;
+}
+
+html.light .devos-root .text-\[\#6DB33F\],
+[data-theme="light"] .devos-root .text-\[\#6DB33F\] {
+  color: #15803D !important;
+}
+
+html.light .devos-root .text-\[\#00D9FF\],
+[data-theme="light"] .devos-root .text-\[\#00D9FF\] {
+  color: #0284C7 !important;
+}
+
+/* Badges in Light Mode */
+html.light .devos-root .bg-emerald-950\/40,
+html.light .devos-root .bg-emerald-950\/30,
+html.light .devos-root .bg-emerald-950\/20,
+[data-theme="light"] .devos-root .bg-emerald-950\/40,
+[data-theme="light"] .devos-root .bg-emerald-950\/30,
+[data-theme="light"] .devos-root .bg-emerald-950\/20 {
+  background-color: #ECFDF5 !important;
+  color: #065F46 !important;
+  border-color: #A7F3D0 !important;
+}
+
+html.light .devos-root .bg-amber-950\/40,
+[data-theme="light"] .devos-root .bg-amber-950\/40 {
+  background-color: #FFFBEB !important;
+  color: #92400E !important;
+  border-color: #FDE68A !important;
+}
+
+/* Dedicated terminal buffer maintains obsidian contrast for CLI output */
+html.light .devos-root .terminal-console-buffer,
+[data-theme="light"] .devos-root .terminal-console-buffer {
+  background-color: #0B0F14 !important;
+  color: #E2E8F0 !important;
+}
+
+html.light .devos-root .terminal-input-bar,
+[data-theme="light"] .devos-root .terminal-input-bar {
+  background-color: #080A0D !important;
+  border-color: #1C2636 !important;
+}
+
+html.light .devos-root .terminal-input-bar input,
+[data-theme="light"] .devos-root .terminal-input-bar input {
+  color: #F1F5F9 !important;
+}
+

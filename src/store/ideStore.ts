@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { Tab, SidebarPanel, AgentState, AgentMessage, TerminalLine, AppViewMode } from '../types';
+import type { Tab, SidebarPanel, AgentState, AgentMessage, TerminalLine, AppViewMode, ThemeMode } from '../types';
 import { getAgentResponse } from '../data/agentResponses';
 import profileData from '../data/profile.json';
 import experienceData from '../data/experience.json';
@@ -9,6 +9,11 @@ import architectureData from '../data/architecture.json';
 import { calculateExperience } from '../utils/experience';
 
 interface IDEState {
+  // Theme
+  theme: ThemeMode;
+  toggleTheme: () => void;
+  setTheme: (theme: ThemeMode) => void;
+
   // App View Mode
   viewMode: AppViewMode;
   setViewMode: (mode: AppViewMode) => void;
@@ -93,7 +98,48 @@ const initialAgentMessages: AgentMessage[] = [
   },
 ];
 
+const getInitialTheme = (): ThemeMode => {
+  if (typeof window !== 'undefined') {
+    const saved = localStorage.getItem('portfolio-theme');
+    if (saved === 'light' || saved === 'dark') {
+      return saved;
+    }
+  }
+  return 'dark';
+};
+
+const applyThemeToDOM = (theme: ThemeMode) => {
+  if (typeof document !== 'undefined') {
+    const root = document.documentElement;
+    root.classList.remove('light', 'dark');
+    root.classList.add(theme);
+    root.setAttribute('data-theme', theme);
+    try {
+      localStorage.setItem('portfolio-theme', theme);
+    } catch {
+      // ignore
+    }
+  }
+};
+
+// Immediately synchronize root class with saved/default theme
+const initialTheme = getInitialTheme();
+applyThemeToDOM(initialTheme);
+
 export const useIDEStore = create<IDEState>((set, get) => ({
+  // Theme
+  theme: initialTheme,
+  toggleTheme: () => {
+    const current = get().theme;
+    const next: ThemeMode = current === 'dark' ? 'light' : 'dark';
+    applyThemeToDOM(next);
+    set({ theme: next });
+  },
+  setTheme: (mode: ThemeMode) => {
+    applyThemeToDOM(mode);
+    set({ theme: mode });
+  },
+
   // View Mode: default is HR-First Portfolio!
   viewMode: 'hr-portfolio',
   setViewMode: (mode) => set({ viewMode: mode }),
