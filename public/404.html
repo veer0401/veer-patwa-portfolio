@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>404 - Resource Not Found</title>
+    <script>
+      // Single Page Application redirect for static hosting (GitHub Pages, etc.)
+      sessionStorage.redirect = location.href;
+      var path = location.pathname;
+      window.location.replace('/?path=' + encodeURIComponent(path));
+    </script>
+  </head>
+  <body style="background-color: #080A0D; color: #94A3B8; font-family: monospace; padding: 2rem; text-align: center;">
+    <h1>404 Not Found</h1>
+    <p>Redirecting to application dispatcher...</p>
+  </body>
+</html>

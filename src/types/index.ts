@@ -139,7 +139,7 @@ export interface BootStep {
   duration: number;
 }
 
-export type AppViewMode = 'hr-portfolio' | 'devos';
+export type AppViewMode = 'hr-portfolio' | 'devos' | 'not-found';
 
 // ── Backward Compatible / Visualizer Types ───────────────────
 

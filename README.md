@@ -111,6 +111,9 @@ All personal data, skills, and projects are centralized in `src/data/`. **You do
 6. **Add Favicon & Logo**: Place your PNG files directly into the `public/` directory:
    - Favicon: `public/favicon.png`
    - Brand Logo: `public/logo.png`
+7. **Add Resume PDF**: Place your resume file into the `public/resume/` directory:
+   - Resume: `public/resume/veer-patwa-resume.pdf`
+   *(Or adjust the path in `src/data/links.json` if using a custom file name).*
 
 ---
 
