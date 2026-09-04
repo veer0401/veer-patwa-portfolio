@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import profileData from '../../../data/profile.json';
 import linksData from '../../../data/links.json';
 import { Mail, Check, Copy, ExternalLink, Send, Code } from 'lucide-react';
-import { GithubIcon, LinkedinIcon } from '../../common/SocialIcons';
+import { GithubIcon, LinkedinIcon, InstagramIcon, WhatsAppIcon } from '../../common/SocialIcons';
 
 export const ContactView: React.FC = () => {
   const [copied, setCopied] = useState(false);
@@ -23,6 +23,8 @@ public class Contact {
     private final String email     = "${linksData.email || 'Configured via links.json'}";
     private final String github    = "${linksData.github || 'Configured via links.json'}";
     private final String linkedin  = "${linksData.linkedin || 'Configured via links.json'}";
+    private final String instagram = "${linksData.instagram || 'Configured via links.json'}";
+    private final String whatsapp  = "${linksData.whatsapp || 'Configured via links.json'}";
 
     public boolean isAvailableForHire() {
         return true;
@@ -145,6 +147,36 @@ public class Contact {
               <div className="flex items-center gap-2 text-xs font-semibold text-zinc-300">
                 <GithubIcon className="w-4 h-4" />
                 <span>[ GITHUB ]</span>
+              </div>
+              <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-white" />
+            </a>
+          )}
+
+          {linksData.whatsapp && (
+            <a
+              href={linksData.whatsapp}
+              target="_blank"
+              rel="noreferrer"
+              className="p-3 rounded-lg bg-[#0B0F14] hover:bg-[#141B24] border border-emerald-500/40 text-slate-200 flex items-center justify-between transition-all group"
+            >
+              <div className="flex items-center gap-2 text-xs font-semibold text-emerald-400">
+                <WhatsAppIcon className="w-4 h-4" />
+                <span>[ WHATSAPP ]</span>
+              </div>
+              <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-white" />
+            </a>
+          )}
+
+          {linksData.instagram && (
+            <a
+              href={linksData.instagram}
+              target="_blank"
+              rel="noreferrer"
+              className="p-3 rounded-lg bg-[#0B0F14] hover:bg-[#141B24] border border-fuchsia-500/40 text-slate-200 flex items-center justify-between transition-all group"
+            >
+              <div className="flex items-center gap-2 text-xs font-semibold text-fuchsia-400">
+                <InstagramIcon className="w-4 h-4" />
+                <span>[ INSTAGRAM ]</span>
               </div>
               <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-white" />
             </a>

@@ -1,10 +1,18 @@
 import { Mail, Code, FileText, Phone, MessageSquare } from 'lucide-react';
-import { GithubIcon, LinkedinIcon } from '../common/SocialIcons';
+import { GithubIcon, LinkedinIcon, InstagramIcon, WhatsAppIcon } from '../common/SocialIcons';
 import linksData from '../../data/links.json';
 import profileData from '../../data/profile.json';
 
 export function ContactSection() {
-  const hasLinks = linksData.email || linksData.linkedin || linksData.github || linksData.leetcode || linksData.phone || linksData.resume;
+  const hasLinks =
+    linksData.email ||
+    linksData.linkedin ||
+    linksData.github ||
+    linksData.whatsapp ||
+    linksData.instagram ||
+    linksData.leetcode ||
+    linksData.phone ||
+    linksData.resume;
 
   return (
     <section id="contact" className="py-20 border-b border-[#21262d] bg-[#0d1117]">
@@ -35,7 +43,43 @@ export function ContactSection() {
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded border border-emerald-500/40 bg-emerald-950/30 hover:bg-emerald-900/40 text-emerald-300 font-mono text-sm transition-all"
               >
                 <Mail className="w-4 h-4 text-emerald-400" />
-                <span>Email</span>
+                <span>Email ({linksData.email})</span>
+              </a>
+            )}
+
+            {linksData.github && (
+              <a
+                href={linksData.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded border border-zinc-700 bg-zinc-850 hover:bg-zinc-800 text-zinc-200 font-mono text-sm transition-all"
+              >
+                <GithubIcon className="w-4 h-4" />
+                <span>GitHub (veer0401)</span>
+              </a>
+            )}
+
+            {linksData.whatsapp && (
+              <a
+                href={linksData.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded border border-emerald-500/40 bg-emerald-950/30 hover:bg-emerald-900/40 text-emerald-300 font-mono text-sm transition-all"
+              >
+                <WhatsAppIcon className="w-4 h-4 text-emerald-400" />
+                <span>WhatsApp (veerpatwa_)</span>
+              </a>
+            )}
+
+            {linksData.instagram && (
+              <a
+                href={linksData.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded border border-fuchsia-500/40 bg-fuchsia-950/30 hover:bg-fuchsia-900/40 text-fuchsia-300 font-mono text-sm transition-all"
+              >
+                <InstagramIcon className="w-4 h-4 text-fuchsia-400" />
+                <span>Instagram (veerpatwa_)</span>
               </a>
             )}
 
@@ -48,18 +92,6 @@ export function ContactSection() {
               >
                 <LinkedinIcon className="w-4 h-4 text-blue-400" />
                 <span>LinkedIn</span>
-              </a>
-            )}
-
-            {linksData.github && (
-              <a
-                href={linksData.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded border border-zinc-700 bg-zinc-850 hover:bg-zinc-800 text-zinc-200 font-mono text-sm transition-all"
-              >
-                <GithubIcon className="w-4 h-4" />
-                <span>GitHub</span>
               </a>
             )}
 

@@ -5,7 +5,8 @@
       "endYear": 2025,
       "institution": "Indus University, Ahmedabad",
       "degree": "B.tech",
-      "field": "Computer Science"
+      "field": "Computer Science",
+      "cgpa": "9.0"
     }
   ]
 }

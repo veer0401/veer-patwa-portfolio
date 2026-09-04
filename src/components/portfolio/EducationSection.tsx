@@ -40,6 +40,12 @@ export function EducationSection() {
                     {item.institution}
                   </p>
                 )}
+                {item.cgpa && (
+                  <div className="mt-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 font-mono text-xs font-semibold">
+                    <span>CGPA: {item.cgpa}</span>
+                    <span className="text-zinc-500 font-normal">/ 10.0</span>
+                  </div>
+                )}
               </div>
 
               <div className="flex items-center gap-2 text-xs font-mono text-zinc-400 shrink-0">
