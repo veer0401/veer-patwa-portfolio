@@ -1,0 +1,26 @@
+{
+  "title": "Veer Patwa | Software Developer | Java & Backend Engineering",
+  "description": "Personal portfolio of Veer Patwa, Software Developer specializing in Java 21, Spring Boot, microservices, backend engineering, and distributed architecture.",
+  "keywords": [
+    "Veer Patwa",
+    "Software Developer",
+    "Java Developer",
+    "Spring Boot",
+    "Backend Engineering",
+    "Microservices",
+    "Data Structures & Algorithms",
+    "System Design",
+    "MySQL",
+    "Docker"
+  ],
+  "author": "Veer Patwa",
+  "navigation": [
+    { "label": "About", "href": "#about" },
+    { "label": "Experience", "href": "#experience" },
+    { "label": "Projects", "href": "#projects" },
+    { "label": "Engineering Focus", "href": "#focus" },
+    { "label": "Skills", "href": "#skills" },
+    { "label": "Education", "href": "#education" },
+    { "label": "Contact", "href": "#contact" }
+  ]
+}

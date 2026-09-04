@@ -1,0 +1,64 @@
+{
+  "projects": [
+    {
+      "id": "inventory-medical-pos",
+      "name": "Inventory Medical POS",
+      "featured": true,
+      "status": "In Development",
+      "type": "Personal Project",
+      "description": "A multi-tenant inventory, POS and billing system designed for medical and retail business workflows.",
+      "technologies": [
+        "Java",
+        "Spring Boot",
+        "Spring Security",
+        "Spring Data JPA",
+        "MySQL",
+        "Docker"
+      ],
+      "features": [
+        "Multi-tenancy",
+        "Inventory management",
+        "POS workflows",
+        "Billing",
+        "Authentication and authorization"
+      ],
+      "links": {
+        "github": "",
+        "live": ""
+      }
+    },
+    {
+      "id": "criminal-record-management-system",
+      "name": "Criminal Record Management System",
+      "featured": false,
+      "status": "Completed",
+      "type": "Academic / Professional Project",
+      "description": "A system designed to support criminal record management and investigation workflows for investigation agencies and police officers.",
+      "technologies": [
+        "C#",
+        "ASP.NET"
+      ],
+      "features": [],
+      "links": {
+        "github": "",
+        "live": ""
+      }
+    },
+    {
+      "id": "java-mobile-shopping-application",
+      "name": "Java Mobile Shopping Application",
+      "featured": false,
+      "status": "Completed",
+      "type": "Project",
+      "description": "A mobile shopping application developed using Java.",
+      "technologies": [
+        "Java"
+      ],
+      "features": [],
+      "links": {
+        "github": "",
+        "live": ""
+      }
+    }
+  ]
+}
