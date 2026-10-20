@@ -2,23 +2,29 @@
   "experiences": [
     {
       "company": "Cognizant",
-      "role": "Programmer Analyst Trainee / Software Developer",
+      "role": "Programmer Analyst Trainee",
+      "client": "American Airlines",
+      "project": "Mercury Rewrite",
       "startDate": "2025-11-01",
       "endDate": null,
       "current": true,
       "location": "",
-      "description": "Working on modernization of an existing system, contributing to migration from RMI-based architecture toward microservice architecture.",
+      "description": "Part of the Mercury Rewrite team at American Airlines, migrating a legacy Java RMI, in-memory architecture to Java microservices backed by a Couchbase data layer. Joined the project in March 2026 after a 3-month Java and Angular training program.",
       "highlights": [
-        "Contributing to backend and API modernization.",
-        "Working on API scaling and high-volume data retrieval.",
-        "Working with approximately 250K records and around 250–260 MB of data in the declared environment.",
-        "Achieving data retrieval in under one minute without expected timeouts in the declared environment."
+        "Delivered a proof of concept that retrieves 250K fares from a 42-million-record Couchbase dataset and renders them in the UI, enabling sorting across all 40-50 fare columns, which database-side sorting could not support.",
+        "Built an agentic mesh proof of concept by extending an open-source repository with custom AI agents, now used by the team to accelerate development.",
+        "Owned end-to-end development of the Marketlist feature and led the design of its draft-table approach.",
+        "Created ops-core, a reusable framework born from the Marketlist design, now adopted by other modules of the project.",
+        "Received written recognition from the Project Manager for the quality of delivery as a fresher."
       ],
       "technologies": [
         "Java",
         "Spring Boot",
         "Microservices",
-        "REST APIs"
+        "Couchbase",
+        "Angular",
+        "REST APIs",
+        "Agentic AI"
       ]
     },
     {
@@ -28,12 +34,17 @@
       "endDate": "2025-05-31",
       "current": false,
       "location": "Gandhinagar, Gujarat",
-      "description": "Worked on the Quantum VPN project during the internship.",
+      "description": "Built a quantum-resistant VPN as part of the internship.",
       "highlights": [
-        "Contributed to the Quantum VPN project.",
-        "Participated in an internal project demonstration."
+        "Integrated Kyber (KEM) and Dilithium (signatures) into StrongSwan using liboqs.",
+        "Modified IKEv2 negotiation and the crypto backend for post-quantum key exchange and authentication; configured and tested tunnels with swanctl."
       ],
-      "technologies": []
+      "technologies": [
+        "StrongSwan",
+        "liboqs",
+        "Post-Quantum Cryptography",
+        "IKEv2"
+      ]
     }
   ]
 }

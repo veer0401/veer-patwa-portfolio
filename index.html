@@ -1,27 +1,53 @@
 <!doctype html>
-<html lang="en" class="dark scroll-smooth">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/logo.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#080A0D" />
-    <title>Veer Patwa | Software Developer | Java & Backend Engineering</title>
-    <meta name="description" content="Veer Patwa — Software Developer specializing in Java 21, Spring Boot, backend engineering, microservices, data structures & algorithms, and system design." />
-    <meta name="keywords" content="Veer Patwa, Software Developer, Java, Spring Boot, Backend Engineering, Microservices, DSA, System Design, MySQL, Docker" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#07070d" />
+    <script>
+      // Apply the saved (or system) theme before first paint so there is no flash
+      (function () {
+        try {
+          var s = localStorage.getItem('vp-theme');
+          var light = s ? s === 'light' : window.matchMedia('(prefers-color-scheme: light)').matches;
+          var c = document.documentElement.classList;
+          c.toggle('light', light);
+          c.toggle('dark', !light);
+        } catch (e) {}
+      })();
+    </script>
+    <title>Veer Patwa | Backend Engineer</title>
+    <meta name="description" content="Veer Patwa is a backend engineer working with Java, Spring Boot, microservices and Couchbase, and the builder of Inventra, an offline-first multi-tenant platform." />
     <meta name="author" content="Veer Patwa" />
 
-    <!-- Open Graph / Social Meta -->
+    <!-- Open Graph / social -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Veer Patwa | Software Developer | Java & Backend Engineering" />
-    <meta property="og:description" content="Software Developer focused on Java 21, Spring Boot, backend engineering, microservices, data structures & algorithms, and system design." />
+    <meta property="og:title" content="Veer Patwa | Backend Engineer" />
+    <meta property="og:description" content="Java microservices at scale, and an offline-first platform built end to end." />
+    <meta name="twitter:card" content="summary" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Veer Patwa",
+        "jobTitle": "Backend Engineer",
+        "worksFor": { "@type": "Organization", "name": "Cognizant" },
+        "alumniOf": "Indus University",
+        "address": { "@type": "PostalAddress", "addressLocality": "Ahmedabad", "addressRegion": "Gujarat", "addressCountry": "IN" },
+        "sameAs": ["https://github.com/veer0401", "https://www.linkedin.com/in/veer-patwa/"],
+        "knowsAbout": ["Java", "Spring Boot", "Microservices", "Couchbase", "PostgreSQL", "React", "TypeScript"]
+      }
+    </script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   </head>
-  <body class="bg-[#080A0D] text-zinc-200 antialiased selection:bg-emerald-500/30 selection:text-emerald-200">
+  <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

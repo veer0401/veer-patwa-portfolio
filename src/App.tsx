@@ -1,104 +1,86 @@
-import { useState, useEffect } from 'react';
-import { useIDEStore } from './store/ideStore';
-import { BootSequence } from './components/BootSequence';
-import { IDELayout } from './components/IDELayout';
-import { PortfolioLayout } from './components/portfolio/PortfolioLayout';
+import { useCallback, useEffect, useState } from 'react';
+import { useRoute, useTheme } from './lib/app';
+import { links, profile } from './lib/content';
 import { CommandPalette } from './components/CommandPalette';
-import { MobileDevOsBlocker } from './components/common/MobileDevOsBlocker';
-import { NotFoundPage } from './components/common/NotFoundPage';
-import { AnimatePresence, motion } from 'framer-motion';
+import { Dock } from './components/Dock';
+import { Cursor } from './components/Cursor';
+import { Nav } from './components/Nav';
+import { CaseStudyPage, NotFound } from './pages/CaseStudyPage';
+import { Home } from './pages/Home';
 
-export function App() {
-  const viewMode = useIDEStore((s) => s.viewMode);
-  const setViewMode = useIDEStore((s) => s.setViewMode);
-  const isBooted = useIDEStore((s) => s.isBooted);
-  const theme = useIDEStore((s) => s.theme);
-
-  const [isMobile, setIsMobile] = useState<boolean>(() => {
-    if (typeof window !== 'undefined') {
-      return window.innerWidth < 1024;
-    }
-    return false;
-  });
-
-  // Check URL pathname on mount and popstate for 404 detection & view mode
-  useEffect(() => {
-    const handleRoute = () => {
-      const path = window.location.pathname;
-      const search = new URLSearchParams(window.location.search);
-      const redirectedPath = search.get('path');
-
-      if (redirectedPath && redirectedPath !== '/' && redirectedPath !== '/index.html') {
-        setViewMode('not-found');
-        return;
-      }
-
-      // Root paths
-      if (path === '/' || path === '' || path === '/index.html') {
-        if (search.get('view') === 'devos') {
-          setViewMode('devos');
-        } else {
-          setViewMode('hr-portfolio');
-        }
-      } else {
-        // Any unrecognized URL path triggers the 404 page
-        setViewMode('not-found');
-      }
-    };
-
-    handleRoute();
-    window.addEventListener('popstate', handleRoute);
-    return () => window.removeEventListener('popstate', handleRoute);
-  }, [setViewMode]);
-
-  // Screen resize listener for mobile desktop detection
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 1024);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
+function Footer() {
   return (
-    <div className={`w-full transition-colors duration-200 ${
-      theme === 'light' ? 'bg-[#F8FAFC] text-slate-900' : 'bg-[#080A0D] text-zinc-100'
-    } ${viewMode === 'devos' ? 'h-screen overflow-hidden' : 'min-h-screen'}`}>
-      {/* Global Command Palette */}
-      <CommandPalette />
-
-      {viewMode === 'not-found' ? (
-        // Professional 404 Page (Linked to Previous Page, HR View, or DEV.OS)
-        <NotFoundPage />
-      ) : viewMode === 'hr-portfolio' ? (
-        // Primary Default: HR-First Portfolio Experience
-        <PortfolioLayout />
-      ) : isMobile ? (
-        // Mobile Blocker for DEV.OS: Enforces PC / Desktop Mode
-        <MobileDevOsBlocker />
-      ) : (
-        // Secondary Layer: Interactive DEV.OS Developer IDE for Desktop
-        <div className="w-full h-full overflow-hidden">
-          <AnimatePresence mode="wait">
-            {!isBooted ? (
-              <BootSequence key="boot" />
-            ) : (
-              <motion.div
-                key="ide"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.25, ease: 'easeOut' }}
-                className="w-full h-full"
-              >
-                <IDELayout />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      )}
-    </div>
+    <footer className="border-t border-ink/10">
+      <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-3 px-4 py-8 pb-28 text-sm text-muted sm:flex-row sm:items-center sm:px-6 md:pb-8">
+        <p className="font-mono text-xs">
+          © {new Date().getFullYear()} {profile.name} · {profile.location}
+        </p>
+        <p className="flex gap-4">
+          <a href={links.github} target="_blank" rel="noopener" className="hover:text-ink">GitHub</a>
+          <a href={links.linkedin} target="_blank" rel="noopener" className="hover:text-ink">LinkedIn</a>
+          <a href={`mailto:${links.email}`} className="hover:text-ink">Email</a>
+        </p>
+      </div>
+    </footer>
   );
 }
 
-export default App;
+export default function App() {
+  const route = useRoute();
+  const { theme, toggle } = useTheme();
+  const [paletteOpen, setPaletteOpen] = useState(false);
+  const closePalette = useCallback(() => setPaletteOpen(false), []);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const typing = (e.target as HTMLElement | null)?.closest('input, textarea, [contenteditable="true"]');
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setPaletteOpen((o) => !o);
+      } else if (e.key === '/' && !typing) {
+        e.preventDefault();
+        setPaletteOpen(true);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  let page;
+  const caseMatch = route.match(/^\/work\/([\w-]+)$/);
+  if (route === '/') page = <Home />;
+  else if (caseMatch) page = <CaseStudyPage slug={caseMatch[1]} />;
+  else page = <NotFound />;
+
+  return (
+    <div className="relative flex min-h-screen flex-col">
+      <div className="ambient" aria-hidden="true">
+        <span className="orb orb-1" />
+        <span className="orb orb-2" />
+        <span className="orb orb-3" />
+      </div>
+      <div className="page-top" aria-hidden="true">
+        <div className="bg-grid absolute inset-0" />
+        <div className="glow absolute inset-0" />
+      </div>
+      <a
+        href="#main"
+        onClick={(e) => {
+          e.preventDefault();
+          document.getElementById('main')?.focus();
+        }}
+        className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded-md focus:bg-accent focus:px-3 focus:py-2 focus:text-sm focus:font-semibold focus:text-[#0c0a24]"
+      >
+        Skip to content
+      </a>
+      <Nav theme={theme} onToggleTheme={toggle} onOpenPalette={() => setPaletteOpen(true)} />
+      <main id="main" tabIndex={-1} className="flex-1 outline-none">
+        {page}
+      </main>
+      <Footer />
+      <CommandPalette open={paletteOpen} onClose={closePalette} onToggleTheme={toggle} />
+      <Dock />
+      <Cursor />
+    </div>
+  );
+}

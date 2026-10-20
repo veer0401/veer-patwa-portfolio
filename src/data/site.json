@@ -1,6 +1,6 @@
 {
   "title": "Veer Patwa | Software Developer | Java & Backend Engineering",
-  "description": "Personal portfolio of Veer Patwa, Software Developer specializing in Java 21, Spring Boot, microservices, backend engineering, and distributed architecture.",
+  "description": "Personal portfolio of Veer Patwa, Software Developer working with Java, Spring Boot, microservices, Couchbase and React. Builder of Inventra, an offline-first pharmacy ERP.",
   "keywords": [
     "Veer Patwa",
     "Software Developer",
@@ -10,17 +10,42 @@
     "Microservices",
     "Data Structures & Algorithms",
     "System Design",
-    "MySQL",
-    "Docker"
+    "Docker",
+    "Couchbase",
+    "PostgreSQL",
+    "Angular",
+    "React",
+    "TypeScript"
   ],
   "author": "Veer Patwa",
   "navigation": [
-    { "label": "About", "href": "#about" },
-    { "label": "Experience", "href": "#experience" },
-    { "label": "Projects", "href": "#projects" },
-    { "label": "Engineering Focus", "href": "#focus" },
-    { "label": "Skills", "href": "#skills" },
-    { "label": "Education", "href": "#education" },
-    { "label": "Contact", "href": "#contact" }
+    {
+      "label": "About",
+      "href": "#about"
+    },
+    {
+      "label": "Experience",
+      "href": "#experience"
+    },
+    {
+      "label": "Projects",
+      "href": "#projects"
+    },
+    {
+      "label": "Engineering Focus",
+      "href": "#focus"
+    },
+    {
+      "label": "Skills",
+      "href": "#skills"
+    },
+    {
+      "label": "Education",
+      "href": "#education"
+    },
+    {
+      "label": "Contact",
+      "href": "#contact"
+    }
   ]
 }

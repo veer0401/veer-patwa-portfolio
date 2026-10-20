@@ -4,9 +4,15 @@
       "startYear": 2021,
       "endYear": 2025,
       "institution": "Indus University, Ahmedabad",
-      "degree": "B.tech",
-      "field": "Computer Science",
-      "cgpa": "9.0"
+      "degree": "B.Tech",
+      "field": "Computer Science and Engineering",
+      "cgpa": "9.05"
     }
+  ],
+  "certifications": [
+    "Google Cybersecurity",
+    "Google AI Essentials",
+    "AWS Cloud Foundations",
+    "AWS Machine Learning Foundations"
   ]
 }

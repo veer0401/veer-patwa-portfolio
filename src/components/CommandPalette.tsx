@@ -1,291 +1,305 @@
-import React, { useState, useEffect } from 'react';
-import { useIDEStore } from '../store/ideStore';
-import { Search, ArrowRight, FileText, Coffee, Zap, Network, GitCommit, Bot, Terminal, Mail, ExternalLink, Code, Sun, Moon } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import linksData from '../data/links.json';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import type { ReactNode } from 'react';
+import {
+  ArrowDown, ArrowUp, Briefcase, Check, Copy, CornerDownLeft, Download, ExternalLink,
+  FileText, GitBranch, House, Layers, Mail, Search, SunMoon, Tag,
+} from 'lucide-react';
+import { go } from '../lib/app';
+import { caseStudies, links, skills } from '../lib/content';
+import { Kbd } from './ui';
 
-export const CommandPalette: React.FC = () => {
-  const {
-    isCommandPaletteOpen,
-    setCommandPaletteOpen,
-    openFile,
-    toggleTerminal,
-    toggleAgent,
-    setViewMode,
-    theme,
-    toggleTheme,
-  } = useIDEStore();
+type Group = 'Navigate' | 'Case studies' | 'Actions' | 'Stack';
 
-  const isLight = theme === 'light';
+interface Command {
+  id: string;
+  label: string;
+  group: Group;
+  icon: ReactNode;
+  keywords: string[];
+  /** Skill entries stay out of the default list and only appear when you search. */
+  searchOnly?: boolean;
+  /** Keep the palette open after running (used for "copy email"). */
+  keepOpen?: boolean;
+  run: () => void;
+}
 
+interface Props {
+  open: boolean;
+  onClose: () => void;
+  onToggleTheme: () => void;
+}
+
+const ic = 'h-4 w-4 shrink-0';
+
+function isSubsequence(needle: string, hay: string) {
+  let i = 0;
+  for (const ch of hay) if (ch === needle[i] && ++i === needle.length) return true;
+  return needle.length === 0;
+}
+
+/** Weighted match: label start > word start > label substring > keyword > loose fuzzy. 0 = no match. */
+function score(c: Command, q: string): number {
+  const label = c.label.toLowerCase();
+  const hay = `${label} ${c.keywords.join(' ').toLowerCase()}`;
+  let total = 0;
+  for (const t of q.toLowerCase().split(/\s+/).filter(Boolean)) {
+    if (label.startsWith(t)) total += 100;
+    else if (label.split(/[\s\-/.()]+/).some((w) => w.startsWith(t))) total += 70;
+    else if (label.includes(t)) total += 50;
+    else if (hay.includes(t)) total += 25;
+    else if (t.length >= 3 && isSubsequence(t, label)) total += 8;
+    else return 0;
+  }
+  return total;
+}
+
+function Highlight({ text, query }: { text: string; query: string }) {
+  const tokens = query.toLowerCase().split(/\s+/).filter(Boolean);
+  if (tokens.length === 0) return <>{text}</>;
+  const lower = text.toLowerCase();
+  const mask = new Array<boolean>(text.length).fill(false);
+  for (const t of tokens) {
+    const at = lower.indexOf(t);
+    if (at >= 0) for (let i = at; i < at + t.length; i++) mask[i] = true;
+  }
+  const out: ReactNode[] = [];
+  let i = 0;
+  while (i < text.length) {
+    let j = i;
+    while (j < text.length && mask[j] === mask[i]) j++;
+    const chunk = text.slice(i, j);
+    out.push(
+      mask[i] ? (
+        <mark key={i} className="bg-transparent font-semibold text-accent">
+          {chunk}
+        </mark>
+      ) : (
+        <span key={i}>{chunk}</span>
+      ),
+    );
+    i = j;
+  }
+  return <>{out}</>;
+}
+
+export function CommandPalette({ open, onClose, onToggleTheme }: Props) {
+  return open ? <Palette onClose={onClose} onToggleTheme={onToggleTheme} /> : null;
+}
+
+function Palette({ onClose, onToggleTheme }: Omit<Props, 'open'>) {
   const [query, setQuery] = useState('');
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [active, setActive] = useState(0);
+  const [copied, setCopied] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
 
-  const navigateToSection = (id: string) => {
-    setViewMode('hr-portfolio');
-    setTimeout(() => {
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 100);
-  };
+  const commands = useMemo<Command[]>(() => {
+    const nav: Command[] = [
+      { id: 'home', label: 'Home', group: 'Navigate', icon: <House className={ic} />, keywords: ['top', 'start'], run: () => go('/') },
+      { id: 'work', label: 'Selected work', group: 'Navigate', icon: <Briefcase className={ic} />, keywords: ['projects', 'portfolio'], run: () => go('/#work') },
+      { id: 'stack', label: 'Stack', group: 'Navigate', icon: <Layers className={ic} />, keywords: ['skills', 'technologies', 'tools'], run: () => go('/#stack') },
+      { id: 'journey', label: 'Journey', group: 'Navigate', icon: <GitBranch className={ic} />, keywords: ['timeline', 'experience', 'education', 'about'], run: () => go('/#journey') },
+      { id: 'contact', label: 'Contact', group: 'Navigate', icon: <Mail className={ic} />, keywords: ['email', 'hire', 'reach'], run: () => go('/#contact') },
+    ];
+    const cases: Command[] = caseStudies.map((c) => ({
+      id: `cs-${c.slug}`,
+      label: c.title,
+      group: 'Case studies',
+      icon: <FileText className={ic} />,
+      keywords: [c.kicker, c.summary, c.role, ...c.stack],
+      run: () => go(`/work/${c.slug}`),
+    }));
+    const actions: Command[] = [
+      { id: 'resume', label: 'Open resume (PDF)', group: 'Actions', icon: <Download className={ic} />, keywords: ['cv', 'download'], run: () => window.open(links.resume, '_blank', 'noopener') },
+      { id: 'theme', label: 'Toggle light / dark theme', group: 'Actions', icon: <SunMoon className={ic} />, keywords: ['dark', 'light', 'mode'], run: onToggleTheme },
+      {
+        id: 'email',
+        label: 'Copy email address',
+        group: 'Actions',
+        icon: <Copy className={ic} />,
+        keywords: ['mail', 'clipboard', links.email],
+        keepOpen: true,
+        run: () => {
+          navigator.clipboard?.writeText(links.email).then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 1600);
+          });
+        },
+      },
+      { id: 'linkedin', label: 'Open LinkedIn', group: 'Actions', icon: <ExternalLink className={ic} />, keywords: ['social', 'profile'], run: () => window.open(links.linkedin, '_blank', 'noopener') },
+      { id: 'github', label: 'Open GitHub', group: 'Actions', icon: <ExternalLink className={ic} />, keywords: ['code', 'social', 'profile'], run: () => window.open(links.github, '_blank', 'noopener') },
+    ];
+    const stack: Command[] = skills.groups.flatMap((g) =>
+      g.items.map((item) => ({
+        id: `skill-${item}`,
+        label: item,
+        group: 'Stack' as const,
+        icon: <Tag className={ic} />,
+        keywords: [g.title, 'skill', 'stack'],
+        searchOnly: true,
+        run: () => go('/#stack'),
+      })),
+    );
+    return [...nav, ...cases, ...actions, ...stack];
+  }, [onToggleTheme]);
 
-  const actions = [
-    {
-      id: 'open-devos',
-      title: 'Open DEV.OS',
-      desc: 'Launch interactive developer workspace and virtual file system',
-      icon: <Terminal className="w-4 h-4 text-emerald-400" />,
-      run: () => setViewMode('devos'),
-    },
-    {
-      id: 'open-hr-portfolio',
-      title: 'Open HR Portfolio Overview',
-      desc: 'Switch to executive HR-first portfolio presentation',
-      icon: <FileText className="w-4 h-4 text-emerald-400" />,
-      run: () => setViewMode('hr-portfolio'),
-    },
-    {
-      id: 'theme-toggle',
-      title: theme === 'dark' ? 'Switch to Light Theme' : 'Switch to Dark Theme',
-      desc: theme === 'dark' ? 'Enable clean, high-contrast light engineering workspace' : 'Enable sleek obsidian terminal dark theme',
-      icon: theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-400" />,
-      run: () => toggleTheme(),
-    },
-    {
-      id: 'open-about',
-      title: 'Open About',
-      desc: 'Navigate to Veer Patwa profile and summary',
-      icon: <Coffee className="w-4 h-4 text-amber-400" />,
-      run: () => {
-        navigateToSection('about');
-        openFile('/src/about/AboutDeveloper.java', 'AboutDeveloper.java', 'coffee', 'java');
-      },
-    },
-    {
-      id: 'open-experience',
-      title: 'Open Experience',
-      desc: 'Cognizant modernization & BISAG-N career history',
-      icon: <GitCommit className="w-4 h-4 text-emerald-400" />,
-      run: () => {
-        navigateToSection('experience');
-        openFile('/src/experience/Experience.java', 'Experience.java', 'git-commit-horizontal', 'java');
-      },
-    },
-    {
-      id: 'open-projects',
-      title: 'Open Projects',
-      desc: 'Featured: Inventory Medical POS, Criminal Record Management, Java Shopping App',
-      icon: <Zap className="w-4 h-4 text-emerald-400" />,
-      run: () => {
-        navigateToSection('projects');
-        openFile('/src/projects/InventoryMedicalPOS.java', 'InventoryMedicalPOS.java', 'coffee', 'java');
-      },
-    },
-    {
-      id: 'open-skills',
-      title: 'Open Skills',
-      desc: 'Java 21, Spring Boot, DSA, and backend engineering competencies',
-      icon: <Code className="w-4 h-4 text-emerald-400" />,
-      run: () => {
-        navigateToSection('skills');
-        openFile('/src/skills/JavaStack.java', 'JavaStack.java', 'coffee', 'java');
-      },
-    },
-    {
-      id: 'open-architecture',
-      title: 'Open Architecture',
-      desc: 'RMI to Microservices modernization & Spring layered backend model',
-      icon: <Network className="w-4 h-4 text-blue-400" />,
-      run: () => {
-        navigateToSection('focus');
-        openFile('/architecture/microservices.arch', 'microservices.arch', 'network', 'architecture');
-      },
-    },
-    {
-      id: 'open-contact',
-      title: 'Open Contact',
-      desc: 'Connect with Veer Patwa for engineering opportunities',
-      icon: <Mail className="w-4 h-4 text-emerald-400" />,
-      run: () => {
-        navigateToSection('contact');
-        openFile('/src/contact/Contact.java', 'Contact.java', 'mail', 'java');
-      },
-    },
-    ...(linksData.resume ? [{
-      id: 'open-resume',
-      title: 'Open Resume',
-      desc: 'View or download Veer Patwa verified resume (PDF)',
-      icon: <FileText className="w-4 h-4 text-emerald-400" />,
-      run: () => window.open(linksData.resume, '_blank'),
-    }] : []),
-    ...(linksData.github ? [{
-      id: 'open-github',
-      title: 'Open GitHub',
-      desc: 'Visit developer GitHub profile and open-source repositories',
-      icon: <ExternalLink className="w-4 h-4 text-zinc-400" />,
-      run: () => window.open(linksData.github, '_blank'),
-    }] : []),
-    ...(linksData.linkedin ? [{
-      id: 'open-linkedin',
-      title: 'Open LinkedIn',
-      desc: 'Connect on LinkedIn professional network',
-      icon: <ExternalLink className="w-4 h-4 text-blue-400" />,
-      run: () => window.open(linksData.linkedin, '_blank'),
-    }] : []),
-    ...(linksData.leetcode ? [{
-      id: 'open-leetcode',
-      title: 'Open LeetCode',
-      desc: 'View algorithmic problem solving on LeetCode',
-      icon: <ExternalLink className="w-4 h-4 text-amber-400" />,
-      run: () => window.open(linksData.leetcode, '_blank'),
-    }] : []),
-    {
-      id: 'toggle-terminal',
-      title: 'Toggle Terminal CLI',
-      desc: 'Open DEV.OS command line prompt',
-      icon: <Terminal className="w-4 h-4 text-emerald-400" />,
-      run: () => {
-        setViewMode('devos');
-        toggleTerminal();
-      },
-    },
-    {
-      id: 'toggle-agent',
-      title: 'Ask DEV AGENT',
-      desc: 'Local intent assistant for Veer Patwa portfolio',
-      icon: <Bot className="w-4 h-4 text-cyan-400" />,
-      run: () => {
-        setViewMode('devos');
-        toggleAgent();
-      },
-    },
-  ];
+  const q = query.trim();
+  const results = useMemo(() => {
+    if (!q) return commands.filter((c) => !c.searchOnly);
+    return commands
+      .map((c, i) => ({ c, s: score(c, q), i }))
+      .filter((r) => r.s > 0)
+      .sort((a, b) => b.s - a.s || a.i - b.i)
+      .map((r) => r.c);
+  }, [commands, q]);
 
-  const filtered = actions.filter((a) =>
-    a.title.toLowerCase().includes(query.toLowerCase()) ||
-    a.desc.toLowerCase().includes(query.toLowerCase())
-  );
+  const safeActive = Math.min(active, Math.max(results.length - 1, 0));
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault();
-        setCommandPaletteOpen(!isCommandPaletteOpen);
-      } else if (isCommandPaletteOpen) {
-        if (e.key === 'Escape') {
-          setCommandPaletteOpen(false);
-        } else if (e.key === 'ArrowDown') {
-          e.preventDefault();
-          setSelectedIndex((prev) => (prev + 1) % (filtered.length || 1));
-        } else if (e.key === 'ArrowUp') {
-          e.preventDefault();
-          setSelectedIndex((prev) => (prev - 1 + filtered.length) % (filtered.length || 1));
-        } else if (e.key === 'Enter') {
-          e.preventDefault();
-          if (filtered[selectedIndex]) {
-            filtered[selectedIndex].run();
-            setCommandPaletteOpen(false);
-          }
-        }
-      }
-    };
+    inputRef.current?.focus();
+  }, []);
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isCommandPaletteOpen, filtered, selectedIndex, setCommandPaletteOpen]);
+  useEffect(() => {
+    listRef.current?.querySelector<HTMLElement>('[data-active="true"]')?.scrollIntoView({ block: 'nearest' });
+  }, [safeActive, results]);
 
-  if (!isCommandPaletteOpen) return null;
+  const runAt = (i: number) => {
+    const cmd = results[i];
+    if (!cmd) return;
+    cmd.run();
+    if (!cmd.keepOpen) onClose();
+  };
 
-  return (
-    <AnimatePresence>
-      <div
-        className="fixed inset-0 z-50 flex items-start justify-center pt-20 bg-black/70 backdrop-blur-sm p-4 font-mono select-none"
-        onClick={() => setCommandPaletteOpen(false)}
-      >
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: -10 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: -10 }}
-          onClick={(e) => e.stopPropagation()}
-          className={`w-full max-w-xl rounded-lg shadow-2xl overflow-hidden text-xs transition-colors duration-200 border ${
-            isLight
-              ? 'bg-white border-slate-300 text-slate-800'
-              : 'bg-[#0B0F14] border-[#28374D] text-slate-300'
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      onClose();
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setActive(results.length ? (safeActive + 1) % results.length : 0);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setActive(results.length ? (safeActive - 1 + results.length) % results.length : 0);
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      setActive(0);
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      setActive(Math.max(results.length - 1, 0));
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      runAt(safeActive);
+    } else if (e.key === 'Tab') {
+      e.preventDefault(); // keep focus inside the dialog
+    }
+  };
+
+  // Group headers only in the default (empty query) view
+  const showHeaders = !q;
+  const rows: ReactNode[] = [];
+  results.forEach((c, i) => {
+    if (showHeaders && results[i - 1]?.group !== c.group) {
+      rows.push(
+        <li key={`h-${c.group}`} role="presentation" className="px-3 pb-1 pt-3 font-mono text-[10px] uppercase tracking-widest text-muted first:pt-1">
+          {c.group}
+        </li>,
+      );
+    }
+    const isActive = i === safeActive;
+    rows.push(
+      <li key={c.id} role="option" id={`pal-opt-${i}`} aria-selected={isActive} data-active={isActive}>
+        <button
+          type="button"
+          tabIndex={-1}
+          onMouseMove={() => setActive(i)}
+          onClick={() => runAt(i)}
+          className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 sm:py-2.5 text-left text-sm transition-colors ${
+            isActive ? 'bg-ink/10 text-ink pointer-coarse:bg-transparent pointer-coarse:text-muted' : 'text-muted'
           }`}
         >
-          {/* Search Box */}
-          <div className={`flex items-center px-4 py-3 border-b ${
-            isLight ? 'border-slate-200 bg-slate-50' : 'border-[#1C2636] bg-[#080A0D]'
-          }`}>
-            <Search className={`w-4 h-4 mr-2 shrink-0 ${isLight ? 'text-emerald-700' : 'text-emerald-400'}`} />
-            <input
-              type="text"
-              value={query}
-              onChange={(e) => {
-                setQuery(e.target.value);
-                setSelectedIndex(0);
-              }}
-              placeholder="Type a command or search portfolio..."
-              className={`flex-1 bg-transparent outline-none text-xs ${
-                isLight
-                  ? 'text-slate-900 placeholder-slate-400'
-                  : 'text-slate-100 placeholder-slate-500'
-              }`}
-              autoFocus
-            />
-            <span className={`text-[10px] font-mono ${isLight ? 'text-slate-400' : 'text-slate-500'}`}>ESC to exit</span>
-          </div>
+          <span className={isActive ? 'text-accent' : 'text-muted'}>
+            {c.id === 'email' && copied ? <Check className={ic} /> : c.icon}
+          </span>
+          <span className="flex-1 truncate">
+            {c.id === 'email' && copied ? 'Copied to clipboard' : <Highlight text={c.label} query={q} />}
+          </span>
+          {(!showHeaders || isActive) && (
+            <span className="shrink-0 font-mono text-[10px] uppercase tracking-wider text-muted">
+              {isActive && showHeaders ? <CornerDownLeft className="h-3.5 w-3.5 pointer-coarse:hidden" /> : c.group}
+            </span>
+          )}
+        </button>
+      </li>,
+    );
+  });
 
-          {/* Action List */}
-          <div className="max-h-80 overflow-y-auto p-2 space-y-1">
-            {filtered.length === 0 ? (
-              <div className={`p-4 text-center text-xs ${isLight ? 'text-slate-400' : 'text-slate-500'}`}>
-                No matching commands found.
-              </div>
-            ) : (
-              filtered.map((action, idx) => {
-                const isSelected = idx === selectedIndex;
-                return (
-                  <div
-                    key={action.id}
-                    onClick={() => {
-                      action.run();
-                      setCommandPaletteOpen(false);
-                    }}
-                    onMouseEnter={() => setSelectedIndex(idx)}
-                    className={`p-2.5 rounded flex items-center justify-between cursor-pointer transition-colors ${
-                      isSelected
-                        ? isLight
-                          ? 'bg-emerald-50 text-emerald-950 border border-emerald-500/50'
-                          : 'bg-[#141B24] text-white border border-emerald-500/40'
-                        : isLight
-                        ? 'text-slate-700 hover:bg-slate-100'
-                        : 'text-slate-300 hover:bg-[#10151C]'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      {action.icon}
-                      <div>
-                        <div className={`font-medium ${
-                          isSelected
-                            ? isLight ? 'text-slate-950 font-bold' : 'text-slate-100 font-semibold'
-                            : isLight ? 'text-slate-800' : 'text-slate-200'
-                        }`}>
-                          {action.title}
-                        </div>
-                        <div className={`text-[10px] mt-0.5 ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>{action.desc}</div>
-                      </div>
-                    </div>
-                    {isSelected && <ArrowRight className={`w-3.5 h-3.5 ${isLight ? 'text-emerald-700' : 'text-emerald-400'}`} />}
-                  </div>
-                );
-              })
-            )}
-          </div>
-        </motion.div>
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-start justify-center bg-black/45 light:bg-slate-900/10 px-3 pt-[max(0.75rem,env(safe-area-inset-top))] backdrop-blur-md sm:px-4 sm:pt-[14vh]"
+      onMouseDown={onClose}
+      role="presentation"
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Search and commands"
+        className="glass-strong w-full max-w-xl overflow-hidden rounded-3xl"
+        onMouseDown={(e) => e.stopPropagation()}
+        onKeyDown={onKeyDown}
+      >
+        <div className="flex items-center gap-3 border-b border-ink/10 px-5">
+          <Search className="h-4 w-4 shrink-0 text-muted" aria-hidden="true" />
+          <input
+            ref={inputRef}
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              setActive(0);
+            }}
+            role="combobox"
+            aria-expanded="true"
+            aria-controls="pal-list"
+            aria-activedescendant={results.length ? `pal-opt-${safeActive}` : undefined}
+            aria-label="Search pages, projects and tech"
+            placeholder="Search pages, projects, tech…"
+            autoComplete="off"
+            spellCheck={false}
+            className="h-14 w-full bg-transparent text-base text-ink outline-none placeholder:text-muted sm:text-sm"
+          />
+          <span className="hidden sm:inline">
+            <Kbd>esc</Kbd>
+          </span>
+          <button type="button" onClick={onClose} className="rounded-full px-3 py-2 text-sm font-medium text-accent sm:hidden">
+            Close
+          </button>
+        </div>
+
+        <ul ref={listRef} id="pal-list" role="listbox" className="max-h-[min(26rem,60vh)] overflow-y-auto p-2">
+          {results.length === 0 ? (
+            <li role="presentation" className="px-4 py-10 text-center text-sm text-muted">
+              <p>
+                No results for <span className="font-mono text-ink">“{q}”</span>
+              </p>
+              <p className="mt-1 text-xs">Try “couchbase”, “spring”, “resume” or “contact”.</p>
+            </li>
+          ) : (
+            rows
+          )}
+        </ul>
+
+        <div className="flex items-center justify-between gap-4 border-t border-ink/10 bg-ink/5 px-5 py-2.5 text-[11px] text-muted">
+          <span className="hidden items-center gap-3 sm:flex">
+            <span className="flex items-center gap-1">
+              <ArrowUp className="h-3 w-3" />
+              <ArrowDown className="h-3 w-3" /> navigate
+            </span>
+            <span className="flex items-center gap-1">
+              <CornerDownLeft className="h-3 w-3" /> select
+            </span>
+          </span>
+          <span>{results.length} result{results.length === 1 ? '' : 's'}</span>
+        </div>
       </div>
-    </AnimatePresence>
+    </div>
   );
-};
+}

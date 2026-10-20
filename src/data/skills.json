@@ -1,78 +1,58 @@
 {
-  "primary": [
-    "Java 21",
-    "Spring Boot",
-    "Data Structures & Algorithms",
-    "Backend Engineering",
-    "System Design",
-    "Low-Level Design"
-  ],
-  "categories": {
-    "java": [
-      "Java 21",
-      "OOP",
-      "Collections",
-      "Streams",
-      "Exception Handling",
-      "Concurrency",
-      "JVM Fundamentals",
-      "SOLID Principles"
-    ],
-    "spring": [
-      "Spring Boot",
-      "Spring Security",
-      "Spring Data JPA",
-      "REST APIs"
-    ],
-    "backend": [
-      "Backend Development",
-      "REST API Development",
-      "Microservices",
-      "API Design",
-      "System Design",
-      "Low-Level Design"
-    ],
-    "database": [
-      "MySQL"
-    ],
-    "devops": [
-      "Docker",
-      "Git",
-      "GitHub"
-    ],
-    "frontend": [
-      "Angular"
-    ],
-    "other": [
-      "Python",
-      "C#",
-      "ASP.NET"
-    ]
-  },
-  "focusAreas": [
+  "groups": [
     {
-      "title": "JAVA & JVM",
-      "description": "Modern Java development, object-oriented programming, collections, streams and JVM fundamentals."
+      "title": "Backend",
+      "items": [
+        "Java",
+        "Spring Boot",
+        "Microservices",
+        "REST APIs",
+        "JWT Authentication",
+        "Multi-tenancy"
+      ]
     },
     {
-      "title": "SPRING BOOT & REST APIS",
-      "description": "Enterprise microservices, Spring Boot, Spring Security, Spring Data JPA, and robust API design."
+      "title": "Data",
+      "items": [
+        "Couchbase",
+        "PostgreSQL",
+        "MySQL",
+        "MS SQL Server",
+        "SQLite",
+        "Flyway"
+      ]
     },
     {
-      "title": "PROBLEM SOLVING & DSA",
-      "description": "Data structures, algorithms, complexity analysis, and efficient algorithmic problem solving."
+      "title": "Frontend & Desktop",
+      "items": [
+        "Angular",
+        "React",
+        "TypeScript",
+        "Tailwind CSS",
+        "Tauri"
+      ]
     },
     {
-      "title": "BACKEND ENGINEERING",
-      "description": "REST APIs, persistence, security, high-throughput data processing, and service-oriented architecture."
+      "title": "Delivery",
+      "items": [
+        "Docker",
+        "Git",
+        "GitHub",
+        "Maven",
+        "pnpm",
+        "Turborepo",
+        "Linux"
+      ]
     },
     {
-      "title": "SYSTEM & LOW-LEVEL DESIGN",
-      "description": "Service decomposition, clean architectural boundaries, design patterns, and maintainable software design."
-    },
-    {
-      "title": "DATABASE ENGINEERING",
-      "description": "Relational data modeling with MySQL, query optimization, indexing, and transactional integrity."
+      "title": "Also",
+      "items": [
+        "Python",
+        "C#",
+        ".NET",
+        "Agentic AI",
+        "Data Structures & Algorithms"
+      ]
     }
   ]
 }

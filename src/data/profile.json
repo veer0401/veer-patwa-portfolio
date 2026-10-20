@@ -1,10 +1,9 @@
 {
   "name": "Veer Patwa",
-  "title": "Software Developer",
-  "specialization": "Java & Backend Engineering",
-  "location": "",
-  "summary": "Software Developer focused on Java, Spring Boot, backend engineering, data structures and system design.",
-  "javaVersion": "21",
+  "title": "Backend Engineer",
+  "specialization": "Java, microservices and offline-first systems",
+  "location": "Ahmedabad, Gujarat",
+  "summary": "Backend engineer at Cognizant working on Java microservices for American Airlines, and sole builder of Inventra, an offline-first multi-tenant platform.",
   "status": "Open to opportunities",
   "careerStartDate": "2025-02-01"
 }
