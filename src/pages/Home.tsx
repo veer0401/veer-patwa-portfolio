@@ -71,11 +71,11 @@ function Proof() {
 }
 
 function Work() {
-  const [mercury, inventra, crime] = caseStudies;
+  const [mercury, inventra] = caseStudies;
   const other = projects.projects.find((p) => p.id === 'java-mobile-shopping-application');
   return (
     <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
-      <SectionHeader id="work" label="work" title="Selected work" intro="Two projects I am proudest of, plus a few earlier ones. Open a case study for the approach and outcomes." />
+      <SectionHeader id="work" label="work" title="Selected work" intro="Two projects I am proudest of, plus an earlier one. Open a case study for the approach and outcomes." />
       <div className="grid gap-4 sm:gap-5 lg:grid-cols-2">
         {[mercury, inventra].map((c, i) => (
           <Reveal key={c.slug} delay={i * 80}>
@@ -111,17 +111,6 @@ function Work() {
       </div>
 
       <div className="mt-4 grid gap-4 sm:mt-5 sm:gap-5 sm:grid-cols-2">
-        <Reveal>
-          <button
-            type="button"
-            onClick={() => go(`/work/${crime.slug}`)}
-            className="glass glass-hover flex h-full w-full flex-col rounded-3xl p-5 text-left sm:p-6"
-          >
-            <p className="font-mono text-xs text-muted">{crime.kicker}</p>
-            <h3 className="mt-1 text-lg font-bold">{crime.title}</h3>
-            <p className="mt-1 text-sm text-muted">{crime.summary}</p>
-          </button>
-        </Reveal>
         {other && (
           <Reveal delay={80}>
             <div className="glass flex h-full flex-col rounded-3xl p-5 sm:p-6">
