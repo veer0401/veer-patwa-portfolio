@@ -1,21 +1,19 @@
 {
-  "title": "Veer Patwa | Software Developer | Java & Backend Engineering",
-  "description": "Personal portfolio of Veer Patwa, Software Developer working with Java, Spring Boot, microservices, Couchbase and React. Builder of Inventra, an offline-first pharmacy ERP.",
+  "title": "Veer Patwa | Java Backend & AI Engineer",
+  "description": "Portfolio of Veer Patwa, Java backend engineer working with Spring Boot, microservices, Couchbase and agentic AI on American Airlines' Mercury Rewrite. Builder of Inventra, a multi-tenant Spring Boot platform.",
   "keywords": [
     "Veer Patwa",
-    "Software Developer",
     "Java Developer",
+    "Backend Engineer",
     "Spring Boot",
-    "Backend Engineering",
     "Microservices",
-    "Data Structures & Algorithms",
-    "System Design",
-    "Docker",
     "Couchbase",
-    "PostgreSQL",
+    "Agentic AI",
+    "AI Engineer",
     "Angular",
-    "React",
-    "TypeScript"
+    "TypeScript",
+    "Docker",
+    "PostgreSQL"
   ],
   "author": "Veer Patwa",
   "navigation": [

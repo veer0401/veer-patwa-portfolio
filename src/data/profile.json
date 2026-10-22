@@ -1,9 +1,9 @@
 {
   "name": "Veer Patwa",
-  "title": "Backend Engineer",
-  "specialization": "Java, microservices and offline-first systems",
+  "title": "Java Backend & AI Engineer",
+  "specialization": "Java microservices, Couchbase and agentic AI",
   "location": "Ahmedabad, Gujarat",
-  "summary": "Backend engineer at Cognizant working on Java microservices for American Airlines, and sole builder of Inventra, an offline-first multi-tenant platform.",
+  "summary": "Java backend engineer at Cognizant on American Airlines' Mercury Rewrite: cut a 250K-fare load from about 8 minutes to under a minute, built a reusable framework used by 3 modules, and an agentic AI mesh that speeds up story writing and estimation. Sole builder of Inventra, a multi-tenant Spring Boot platform.",
   "status": "Open to opportunities",
   "careerStartDate": "2025-02-01"
 }

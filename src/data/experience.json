@@ -11,10 +11,10 @@
       "location": "",
       "description": "Part of the Mercury Rewrite team at American Airlines, migrating a legacy Java RMI, in-memory architecture to Java microservices backed by a Couchbase data layer. Joined the project in March 2026 after a 3-month Java and Angular training program.",
       "highlights": [
-        "Delivered a proof of concept that retrieves 250K fares from a 42-million-record Couchbase dataset and renders them in the UI, enabling sorting across all 40-50 fare columns, which database-side sorting could not support.",
-        "Built an agentic mesh proof of concept by extending an open-source repository with custom AI agents, now used by the team to accelerate development.",
-        "Owned end-to-end development of the Marketlist feature and led the design of its draft-table approach.",
-        "Created ops-core, a reusable framework born from the Marketlist design, now adopted by other modules of the project.",
+        "Loaded 250K fares (30+ sortable, filterable columns) from a 42-million-record Couchbase dataset directly into the UI, replacing an expensive row-by-partition query (about 8 minutes) with key-value lookups and in-memory deduplication in Java: roughly 45-60 seconds, about 8x faster.",
+        "Built an agentic mesh with custom AI agents that business analysts and developers use to generate user stories and estimate effort, cutting roughly 2 days of analyst work to about 1 hour and 1 day of developer estimation to about 30 minutes (approximate figures).",
+        "Owned the Marketlist feature end to end and led the design of its draft-table approach.",
+        "Created ops-core, a reusable framework now used by 3 modules, with more planned.",
         "Received written recognition from the Project Manager for the quality of delivery as a fresher."
       ],
       "technologies": [
@@ -23,7 +23,6 @@
         "Microservices",
         "Couchbase",
         "Angular",
-        "REST APIs",
         "Agentic AI"
       ]
     },

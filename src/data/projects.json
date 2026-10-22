@@ -6,44 +6,18 @@
       "featured": true,
       "status": "In Development",
       "type": "Personal Product",
-      "description": "An offline-first, multi-tenant business platform for pharmacies, designed and built end to end: Java and Spring Boot backend, React web app and a Tauri desktop app.",
+      "description": "An offline-first, multi-tenant business platform for pharmacies, designed and built end to end by one person: a Java and Spring Boot backend with web and desktop clients.",
       "technologies": [
         "Java 17",
         "Spring Boot 4",
         "PostgreSQL",
-        "React",
-        "TypeScript",
-        "Tauri",
+        "JWT",
         "Docker"
       ],
       "features": [
         "Multi-tenant REST API: 17 modules, JWT authentication, 19 database migrations",
-        "Offline-first sync between desktop and server",
-        "Shared UI across web and desktop in a monorepo of 9 packages",
+        "Offline-first sync with idempotent replay on reconnect",
         "267 backend tests, all passing"
-      ],
-      "links": {
-        "github": "",
-        "live": ""
-      }
-    },
-    {
-      "id": "crime-vault",
-      "name": "Crime Vault",
-      "featured": false,
-      "status": "Completed",
-      "type": "Academic Project",
-      "description": "A secure, role-based criminal management system for crime tracking and case management, with team assignments, access-controlled dashboards, internal messaging with activity logging and secure file uploads.",
-      "technologies": [
-        ".NET 8",
-        "C#",
-        "ASP.NET Identity",
-        "Entity Framework",
-        "MS SQL Server"
-      ],
-      "features": [
-        "Role-based access control",
-        "Case management with audit logging"
       ],
       "links": {
         "github": "",

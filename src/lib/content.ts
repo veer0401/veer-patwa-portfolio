@@ -45,11 +45,11 @@ export const caseStudies: CaseStudy[] = [
     status: 'In progress',
     summary:
       'Part of the team moving a legacy Java RMI, in-memory system onto Java microservices backed by Couchbase.',
-    stack: ['Java', 'Spring Boot', 'Microservices', 'Couchbase', 'Angular', 'REST APIs', 'Agentic AI'],
+    stack: ['Java', 'Spring Boot', 'Microservices', 'Couchbase', 'Angular', 'Agentic AI'],
     metrics: [
       { value: '250K', label: 'fares loaded into the UI' },
-      { value: '42M', label: 'records in the source dataset' },
-      { value: '40–50', label: 'columns per fare' },
+      { value: '~8x', label: 'faster than the database query (~8 min to ~45–60 s)' },
+      { value: '3', label: 'modules reusing the ops-core framework' },
     ],
     diagram: 'migration',
     sections: [
@@ -63,15 +63,16 @@ export const caseStudies: CaseStudy[] = [
       {
         heading: 'The hard problem',
         body: [
-          'Users need to see a very large set of fares, each with 40 to 50 columns, and sort by any column. The database could not sort on every one of those columns.',
+          'Users need to see a very large set of fares, each with 30+ columns, and sort and filter by any column. A draft table would have broken sorting and filtering, and the legacy approach of holding the data in server memory or cache was one the client did not want to repeat.',
         ],
       },
       {
         heading: 'What I did',
         bullets: [
-          'Proved a working approach: a proof of concept that retrieves 250K fares out of a 42-million-record Couchbase dataset and renders them in the UI, so sorting works on every column.',
-          'Built an agentic mesh proof of concept by extending an open-source repository with custom AI agents. The team now uses them to speed up development.',
-          'Owned a feature end to end. A design discussion during that work led me to create ops-core, a framework that other modules of the project now reuse.',
+          'Proved a working approach: a proof of concept that loads 250K fares out of a 42-million-record Couchbase dataset straight into the UI, so sorting and filtering work on every column.',
+          'Replaced an expensive row-by-partition query (about 8 minutes for 250K rows in the Couchbase console) with Couchbase key-value lookups and in-memory deduplication in Java. Database to UI now takes roughly 45 to 60 seconds.',
+          'Built an agentic mesh by extending an open-source repository with custom AI agents. Business analysts and developers use it to generate user stories and estimate effort from core-logic difficulty, turning roughly two days of analyst work into about an hour and a day of developer estimation into about thirty minutes (approximate figures).',
+          'Owned the Marketlist feature end to end. A design discussion during that work led me to create ops-core, a framework now used by three modules, with more planned.',
         ],
       },
       {
@@ -91,7 +92,7 @@ export const caseStudies: CaseStudy[] = [
     title: 'Inventra',
     kicker: 'Personal product · In development',
     role: 'Designer and sole developer',
-    period: 'Aug 2026 – Present',
+    period: 'May 2026 – Present',
     status: 'Active development',
     summary:
       'An offline-first, multi-tenant platform for pharmacies, designed and built end to end by one person.',
@@ -134,31 +135,6 @@ export const caseStudies: CaseStudy[] = [
       },
     ],
   },
-  {
-    slug: 'crime-vault',
-    title: 'Crime Vault',
-    kicker: 'Academic project',
-    role: 'Developer',
-    period: 'Jan 2025 – Apr 2025',
-    status: 'Completed',
-    summary: 'A secure, role-based case management system built on .NET 8.',
-    stack: ['.NET 8', 'C#', 'ASP.NET Identity', 'Entity Framework', 'MS SQL Server'],
-    metrics: [],
-    diagram: null,
-    sections: [
-      {
-        heading: 'Overview',
-        body: [
-          'A system for crime tracking and case management where what you can see depends on your role.',
-        ],
-        bullets: [
-          'Role-based access control with access-controlled dashboards.',
-          'Team assignments and case management.',
-          'Internal messaging with activity logging, and secure file uploads.',
-        ],
-      },
-    ],
-  },
 ];
 
 export interface TimelineItem {
@@ -170,7 +146,7 @@ export interface TimelineItem {
 
 export const timeline: TimelineItem[] = [
   {
-    when: 'Aug 2026',
+    when: 'May 2026',
     title: 'Started Inventra',
     where: 'Personal product',
     note: 'Designing and building an offline-first, multi-tenant platform end to end.',
@@ -179,7 +155,7 @@ export const timeline: TimelineItem[] = [
     when: 'Mar 2026',
     title: 'Joined Mercury Rewrite',
     where: 'Cognizant · American Airlines',
-    note: 'Fares proof of concept, agentic mesh proof of concept, and the ops-core framework.',
+    note: 'Fares proof of concept, agentic mesh, and the ops-core framework.',
   },
   {
     when: 'Nov 2025',

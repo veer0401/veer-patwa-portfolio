@@ -16,20 +16,22 @@
       "items": [
         "Couchbase",
         "PostgreSQL",
-        "MySQL",
-        "MS SQL Server",
-        "SQLite",
         "Flyway"
       ]
     },
     {
-      "title": "Frontend & Desktop",
+      "title": "Agentic AI",
+      "items": [
+        "Agentic Mesh",
+        "Custom AI Agents",
+        "AI-assisted Estimation"
+      ]
+    },
+    {
+      "title": "Frontend",
       "items": [
         "Angular",
-        "React",
-        "TypeScript",
-        "Tailwind CSS",
-        "Tauri"
+        "TypeScript"
       ]
     },
     {
@@ -37,21 +39,7 @@
       "items": [
         "Docker",
         "Git",
-        "GitHub",
-        "Maven",
-        "pnpm",
-        "Turborepo",
-        "Linux"
-      ]
-    },
-    {
-      "title": "Also",
-      "items": [
-        "Python",
-        "C#",
-        ".NET",
-        "Agentic AI",
-        "Data Structures & Algorithms"
+        "Maven"
       ]
     }
   ]
