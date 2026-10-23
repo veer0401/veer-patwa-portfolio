@@ -37,9 +37,9 @@ export interface CaseStudy {
  */
 export const caseStudies: CaseStudy[] = [
   {
-    slug: 'mercury',
-    title: 'Mercury Rewrite',
-    kicker: 'Cognizant · American Airlines',
+    slug: 'migration',
+    title: 'Legacy-to-Microservices Migration',
+    kicker: 'Cognizant',
     role: 'Programmer Analyst Trainee',
     period: 'Mar 2026 – Present',
     status: 'In progress',
@@ -56,7 +56,7 @@ export const caseStudies: CaseStudy[] = [
       {
         heading: 'Context',
         body: [
-          'A large airline platform ran on Java RMI, with most of its working data held in memory and cache. The rewrite moves it to Java microservices with Couchbase as the data layer.',
+          'A large enterprise platform ran on Java RMI, with most of its working data held in memory and cache. The rewrite moves it to Java microservices with Couchbase as the data layer.',
           'I joined the project in March 2026, straight after three months of Java and Angular training.',
         ],
       },
@@ -153,8 +153,8 @@ export const timeline: TimelineItem[] = [
   },
   {
     when: 'Mar 2026',
-    title: 'Joined Mercury Rewrite',
-    where: 'Cognizant · American Airlines',
+    title: 'Joined the migration project',
+    where: 'Cognizant',
     note: 'Fares proof of concept, agentic mesh, and the ops-core framework.',
   },
   {

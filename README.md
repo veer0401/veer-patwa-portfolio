@@ -30,7 +30,7 @@ public/resume/             veer-patwa-resume.pdf (linked from every Resume butto
 docs/DESIGN_PLAN.md        Design plan and decisions
 ```
 
-Routes use the URL hash (`#/work/mercury`), so the site works on any static host with no rewrite rules.
+Routes use the URL hash (`#/work/migration`), so the site works on any static host with no rewrite rules.
 
 ## Look and feel
 

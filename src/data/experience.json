@@ -3,13 +3,11 @@
     {
       "company": "Cognizant",
       "role": "Programmer Analyst Trainee",
-      "client": "American Airlines",
-      "project": "Mercury Rewrite",
       "startDate": "2025-11-01",
       "endDate": null,
       "current": true,
       "location": "",
-      "description": "Part of the Mercury Rewrite team at American Airlines, migrating a legacy Java RMI, in-memory architecture to Java microservices backed by a Couchbase data layer. Joined the project in March 2026 after a 3-month Java and Angular training program.",
+      "description": "Part of a team migrating a legacy Java RMI, in-memory architecture to Java microservices backed by a Couchbase data layer. Joined the project in March 2026 after a 3-month Java and Angular training program.",
       "highlights": [
         "Loaded 250K fares (30+ sortable, filterable columns) from a 42-million-record Couchbase dataset directly into the UI, replacing an expensive row-by-partition query (about 8 minutes) with key-value lookups and in-memory deduplication in Java: roughly 45-60 seconds, about 8x faster.",
         "Built an agentic mesh with custom AI agents that business analysts and developers use to generate user stories and estimate effort, cutting roughly 2 days of analyst work to about 1 hour and 1 day of developer estimation to about 30 minutes (approximate figures).",

@@ -7,7 +7,7 @@ Status: proposal, nothing implemented. Written 2026-10-21 for `portfolio2`.
 | Area | Current state | Problem |
 |---|---|---|
 | Look | Dark, green-on-black "terminal" theme, mono headings, code-window hero | Looks like most developer portfolios; says "developer" but not what you did |
-| Story | Sections list facts (Experience, Projects, Focus, Skills) | Proof is buried in small bullets; Mercury Rewrite and Inventra are the strongest material and look like minor cards |
+| Story | Sections list facts (Experience, Projects, Focus, Skills) | Proof is buried in small bullets; the migration project and Inventra are the strongest material and look like minor cards |
 | Structure | HR-first page plus an optional DEV.OS IDE mode | DEV.OS is clever but blocked on mobile and holds hard-coded claims (Redis, Spring Batch) |
 | Performance | One JS bundle, 1.6 MB (about 440 KB gzip), three.js and Monaco inside | Slow first load on mobile data, bad for a portfolio that recruiters open on phones |
 | Content hygiene | Java 21 everywhere, fixed hero text | Some claims don't match the resume |
@@ -18,10 +18,10 @@ Keep: the data-driven JSON setup, the dark/light toggle, the DEV.OS idea, the re
 
 One sentence the whole site serves:
 
-> "Backend engineer who ships: Java microservices at American Airlines scale by day, a full offline-first pharmacy ERP by night."
+> "Backend engineer who ships: Java microservices at enterprise scale by day, a full offline-first pharmacy ERP by night."
 
 Three proof points, always visible above the fold or one scroll away:
-1. **250K fares from 42M records** in the UI (Mercury Rewrite).
+1. **250K fares from 42M records** in the UI (migration project).
 2. **ops-core**, a framework other modules reuse.
 3. **Inventra**: 17 modules, 267 tests, solo.
 
@@ -47,7 +47,7 @@ Moves away from hacker-terminal green toward a quieter, product-grade look.
 
 ```
 /                 Home: hero, proof strip, 3 featured work cards, short about, contact
-/work/mercury     Case study: Mercury Rewrite (Cognizant, American Airlines)
+/work/migration   Case study: Legacy-to-microservices migration (Cognizant)
 /work/inventra    Case study: Inventra
 /work/crime-vault Short case study
 /about            Story, skills grouped by use, education
@@ -63,12 +63,12 @@ Single-page anchors can stay for the home page; case studies become real routes 
 1. **Nav:** name, Work, About, Resume, theme toggle, "Contact" button. Sticky, blurred background.
 2. **Hero:** headline (the positioning sentence, 2 lines), one supporting line, two buttons ("See my work", "Download resume"), availability pill. Right side: a compact, real artefact (a live "fares POC" mini diagram or an Inventra screenshot), not a fake code window.
 3. **Proof strip:** four numbers in a row with one-line captions.
-4. **Selected work:** two large cards (Mercury Rewrite, Inventra), each with outcome, stack chips and "Read case study". Crime Vault as a smaller row.
+4. **Selected work:** two large cards (migration project, Inventra), each with outcome, stack chips and "Read case study". Crime Vault as a smaller row.
 5. **How I work:** three short points drawn from real examples (design for scale, reuse through frameworks, tests before ship).
 6. **Stack:** grouped by what you use them for, not a wall of chips (Backend, Data, Frontend, Delivery). Show only things you can talk about in an interview.
 7. **Contact:** email, LinkedIn, GitHub, resume. Short and direct.
 
-### Case study template (Mercury Rewrite, Inventra)
+### Case study template (migration project, Inventra)
 - Header: role, timeline, stack, team size, status.
 - **Context:** one paragraph of the problem.
 - **Challenge:** what made it hard (sorting 40-50 columns the database could not do; offline writes that must merge safely).
@@ -77,7 +77,7 @@ Single-page anchors can stay for the home page; case studies become real routes 
 - **What I would do next / what I learned.**
 - For Inventra add: architecture diagram, module map (from `docs/audit/02_MODULE_MAP.md`), test counts, screenshots, GitHub/demo links when they exist.
 
-Client confidentiality: American Airlines and Cognizant work must stay at the level already on your resume. No internal system names beyond what you are allowed to share, no screenshots, no code. Check with your manager if unsure.
+Client confidentiality: Client work at Cognizant must stay at the level already on your resume. No internal system names beyond what you are allowed to share, no screenshots, no code. Check with your manager if unsure.
 
 ### DEV.OS
 - Keep as an Easter egg for engineers, reached by "Explore DEV.OS" and a keyboard shortcut.
@@ -109,7 +109,7 @@ Libraries already in the project: React 19, Vite 8, Tailwind 4, framer-motion, l
 | 1 | Capture assets: Inventra screenshots, architecture diagrams, a clean headshot or logo | Asset folder | 1-2 days |
 | 2 | Design tokens, type, components (nav, cards, chips, number tiles) in a small style page | `/styleguide` route | 1-2 days |
 | 3 | Build Home with new hero, proof strip, work cards | New home, old site kept behind `/legacy` until done | 2-3 days |
-| 4 | Case study routes (Mercury, Inventra, Crime Vault) | 3 pages | 2-3 days |
+| 4 | Case study routes (migration, Inventra, Crime Vault) | 3 pages | 2-3 days |
 | 5 | Lazy-load DEV.OS, clean its content, mobile fallback | Performance target met | 1-2 days |
 | 6 | Accessibility, SEO, OG images, analytics, Lighthouse CI | Release checklist green | 1 day |
 | 7 | Deploy, update LinkedIn, GitHub README and resume links | Live site | 0.5 day |
@@ -120,7 +120,7 @@ Total: about 9-14 working days; a strong version of Home plus the Inventra case 
 
 1. Accent colour: keep emerald or switch to indigo or another hue?
 2. Keep the terminal personality (as a small detail) or go fully clean and product-like?
-3. What may you say publicly about Mercury Rewrite and American Airlines?
+3. What may you say publicly about the Cognizant client project?
 4. Can you share Inventra screenshots, and will you make its repo or a demo public?
 5. Keep the name "DEV.OS" and the IDE mode, or retire it?
 6. Do you want a blog or notes section later (for example write-ups of the fares POC approach)?

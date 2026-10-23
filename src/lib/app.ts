@@ -76,7 +76,7 @@ export function useRoute(): string {
   return path;
 }
 
-/** Go to a route ("/work/mercury") or to a section on the home page ("/#stack"). */
+/** Go to a route ("/work/migration") or to a section on the home page ("/#stack"). */
 export function go(target: string) {
   if (target.startsWith('/#')) {
     const id = target.slice(2);

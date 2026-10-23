@@ -8,7 +8,7 @@ interface Line {
 const lines: Line[] = [
   { cmd: 'whoami', out: ['veer patwa · backend engineer'] },
   { cmd: 'cat stack.txt', out: ['java · spring boot · couchbase · react'] },
-  { cmd: 'ls work/', out: ['mercury-rewrite/  inventra/'] },
+  { cmd: 'ls work/', out: ['migration/  inventra/'] },
   { cmd: 'status', out: ['● open to opportunities'] },
 ];
 

@@ -20,7 +20,7 @@ function Hero() {
             <span className="text-accent">Scale first,</span> then ship it end to end.
           </h1>
           <p className="mt-4 max-w-xl text-base text-muted sm:mt-6 sm:text-lg">
-            Java microservices at American Airlines scale by day. A full offline-first platform,{' '}
+            Java microservices at enterprise scale by day. A full offline-first platform,{' '}
             <button type="button" onClick={() => go('/work/inventra')} className="text-ink underline decoration-accent/60 underline-offset-4 hover:decoration-accent">
               Inventra
             </button>
@@ -71,13 +71,13 @@ function Proof() {
 }
 
 function Work() {
-  const [mercury, inventra] = caseStudies;
+  const [migration, inventra] = caseStudies;
   const other = projects.projects.find((p) => p.id === 'java-mobile-shopping-application');
   return (
     <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
       <SectionHeader id="work" label="work" title="Selected work" intro="Two projects I am proudest of, plus an earlier one. Open a case study for the approach and outcomes." />
       <div className="grid gap-4 sm:gap-5 lg:grid-cols-2">
-        {[mercury, inventra].map((c, i) => (
+        {[migration, inventra].map((c, i) => (
           <Reveal key={c.slug} delay={i * 80}>
             <button
               type="button"
